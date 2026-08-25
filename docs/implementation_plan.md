@@ -21,10 +21,16 @@
 - Metrics module, comparison CSV/JSON, phase1 report generator
 - Figures via `python -m src.evaluation.evaluate`
 
-## Phase 1D — Paper & presentation drafts ✅ (stubs with TBD metrics)
+## Phase 1D — Paper & presentation drafts ✅ (stubs + measured-dev tables)
 
 - `research/paper/phase1_draft.md`
-- `presentation/phase1/outline.md`
+- `presentation/phase1/slides_draft.md`
+- 25k + 80k development benchmarks completed (not official)
+
+## Phase 1E — Connectivity ✅
+
+- Git initialized; private GitHub remote: `https://github.com/EshaanS013/Diabetes_XAI`
+- Resource guide: `docs/resources_and_cloud.md`
 
 ## Phase 2 — Explainability
 

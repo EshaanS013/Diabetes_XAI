@@ -2,6 +2,8 @@
 
 Research-grade pipeline for **preliminary diabetes risk screening** with interpretable ML (SHAP + LIME), a FastAPI backend, and a path to a Flutter mobile client.
 
+**Remote:** https://github.com/EshaanS013/Diabetes_XAI (private)
+
 > **Not a diagnostic device.** Outputs are screening aids. Explanations are associative, not causal. SHAP/LIME agreement is explanation concordance, not predictive confidence.
 
 ## What this repo contains
