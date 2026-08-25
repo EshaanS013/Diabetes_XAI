@@ -1,0 +1,162 @@
+# Formal schema for CDC BRFSS2015 Diabetes Binary Health Indicators
+# Derived from the public cleaned extract used in this project.
+# Validate against the actual CSV via `python -m src.data.validate`.
+
+dataset:
+  name: diabetes_binary_health_indicators_BRFSS2015
+  source: "CDC BRFSS 2015 Diabetes Health Indicators (cleaned binary extract)"
+  target: Diabetes_binary
+  n_features: 21
+  notes: >
+    Self-reportable indicators suitable for mobile screening.
+    Binary target: 0 = no diabetes, 1 = prediabetes or diabetes.
+
+target:
+  name: Diabetes_binary
+  dtype: float_or_int
+  allowed_values: [0, 1]
+  class_labels:
+    0: no_diabetes
+    1: diabetes_or_prediabetes
+
+features:
+  HighBP:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Diagnosed high blood pressure"
+    modifiable: partially
+  HighChol:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Diagnosed high cholesterol"
+    modifiable: partially
+  CholCheck:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Cholesterol check in past 5 years"
+    modifiable: true
+  BMI:
+    dtype: continuous
+    min: 12
+    max: 100
+    description: "Body mass index"
+    modifiable: true
+  Smoker:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Smoked at least 100 cigarettes in lifetime"
+    modifiable: true
+  Stroke:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Ever told had a stroke"
+    modifiable: false
+  HeartDiseaseorAttack:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Coronary heart disease (CHD) or myocardial infarction (MI)"
+    modifiable: partially
+  PhysActivity:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Physical activity in past 30 days (not including job)"
+    modifiable: true
+  Fruits:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Consume fruit 1+ times per day"
+    modifiable: true
+  Veggies:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Consume vegetables 1+ times per day"
+    modifiable: true
+  HvyAlcoholConsump:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Heavy alcohol consumption (adult men>14 / women>7 drinks/week)"
+    modifiable: true
+  AnyHealthcare:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Have any kind of health care coverage"
+    modifiable: partially
+  NoDocbcCost:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Could not see doctor because of cost (past 12 months)"
+    modifiable: partially
+  GenHlth:
+    dtype: ordinal
+    allowed_values: [1, 2, 3, 4, 5]
+    description: "General health (1=excellent … 5=poor)"
+    modifiable: partially
+  MentHlth:
+    dtype: continuous_count
+    min: 0
+    max: 30
+    description: "Days of poor mental health in past 30 days"
+    modifiable: partially
+  PhysHlth:
+    dtype: continuous_count
+    min: 0
+    max: 30
+    description: "Days of poor physical health in past 30 days"
+    modifiable: partially
+  DiffWalk:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "Serious difficulty walking or climbing stairs"
+    modifiable: partially
+  Sex:
+    dtype: binary
+    allowed_values: [0, 1]
+    description: "0=female, 1=male (CDC encoding)"
+    modifiable: false
+  Age:
+    dtype: ordinal
+    allowed_values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+    description: "13-level age category"
+    modifiable: false
+  Education:
+    dtype: ordinal
+    allowed_values: [1, 2, 3, 4, 5, 6]
+    description: "Education level (1–6)"
+    modifiable: false
+  Income:
+    dtype: ordinal
+    allowed_values: [1, 2, 3, 4, 5, 6, 7, 8]
+    description: "Income category (1–8)"
+    modifiable: partially
+
+feature_order:
+  - HighBP
+  - HighChol
+  - CholCheck
+  - BMI
+  - Smoker
+  - Stroke
+  - HeartDiseaseorAttack
+  - PhysActivity
+  - Fruits
+  - Veggies
+  - HvyAlcoholConsump
+  - AnyHealthcare
+  - NoDocbcCost
+  - GenHlth
+  - MentHlth
+  - PhysHlth
+  - DiffWalk
+  - Sex
+  - Age
+  - Education
+  - Income
+
+scale_sensitive_features:
+  - BMI
+  - MentHlth
+  - PhysHlth
+  - GenHlth
+  - Age
+  - Education
+  - Income

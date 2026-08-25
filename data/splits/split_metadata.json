@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-08-24T18:25:33.023328+00:00",
+  "random_seed": 42,
+  "split_version": "split-v1",
+  "dataset_version": "brfss2015-clean-v1",
+  "dataset_hash": "4b702ecd2e80e431148cf29f12158928a2b401e97a65ddb7293ad5e6dc1a6f60",
+  "n_rows": 253680,
+  "ratios": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "sizes": {
+    "train": 177575,
+    "validation": 38052,
+    "test": 38053
+  },
+  "target_prevalence": {
+    "train": {
+      "positive": 24742,
+      "negative": 152833,
+      "prevalence": 0.13933267633394342
+    },
+    "validation": {
+      "positive": 5302,
+      "negative": 32750,
+      "prevalence": 0.1393356459581625
+    },
+    "test": {
+      "positive": 5302,
+      "negative": 32751,
+      "prevalence": 0.13933198433763436
+    }
+  },
+  "note": "Test set is sacred \u2014 never use for fitting, tuning, SMOTE, or selection."
+}

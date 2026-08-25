@@ -1,0 +1,46 @@
+{
+  "n_rows": 253680,
+  "n_columns": 22,
+  "n_features": 21,
+  "target_counts": {
+    "0": 218334,
+    "1": 35346
+  },
+  "target_proportions": {
+    "0": 0.8606669820245979,
+    "1": 0.13933301797540207
+  },
+  "duplicate_rows": 24206,
+  "missing_by_column": {
+    "Diabetes_binary": 0,
+    "HighBP": 0,
+    "HighChol": 0,
+    "CholCheck": 0,
+    "BMI": 0,
+    "Smoker": 0,
+    "Stroke": 0,
+    "HeartDiseaseorAttack": 0,
+    "PhysActivity": 0,
+    "Fruits": 0,
+    "Veggies": 0,
+    "HvyAlcoholConsump": 0,
+    "AnyHealthcare": 0,
+    "NoDocbcCost": 0,
+    "GenHlth": 0,
+    "MentHlth": 0,
+    "PhysHlth": 0,
+    "DiffWalk": 0,
+    "Sex": 0,
+    "Age": 0,
+    "Education": 0,
+    "Income": 0
+  },
+  "total_missing": 0,
+  "invalid_target_rows": 0,
+  "range_violations": {},
+  "unexpected_columns": [],
+  "missing_columns": [],
+  "dataset_hash": "4b702ecd2e80e431148cf29f12158928a2b401e97a65ddb7293ad5e6dc1a6f60",
+  "status": "ok",
+  "errors": []
+}

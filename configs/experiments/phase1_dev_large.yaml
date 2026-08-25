@@ -1,0 +1,30 @@
+# Phase-1 DEVELOPMENT — larger subsample (still not official)
+selection_status: proposed_pending_confirmation
+allow_official_phase1_run: false
+primary_metric: f1
+cv_folds: 3
+dev_train_subsample: 80000
+
+phase1_models:
+  - logistic_regression
+  - random_forest
+  - xgboost
+  - lightgbm
+  - mlp
+
+all_supported_models:
+  - logistic_regression
+  - naive_bayes
+  - knn
+  - svm
+  - random_forest
+  - gradient_boosting
+  - xgboost
+  - lightgbm
+  - catboost
+  - mlp
+
+model_overrides: {}
+selection_rationale: >
+  Larger development benchmark (80k stratified train rows) for stability
+  checks before a confirmed full-data official Phase-1 run.

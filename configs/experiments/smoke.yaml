@@ -1,0 +1,22 @@
+# Development smoke config — NOT an official Phase-1 result.
+selection_status: proposed_pending_confirmation
+allow_official_phase1_run: false
+primary_metric: f1
+cv_folds: 3
+dev_train_subsample: 8000
+phase1_models:
+  - logistic_regression
+  - random_forest
+all_supported_models:
+  - logistic_regression
+  - naive_bayes
+  - knn
+  - svm
+  - random_forest
+  - gradient_boosting
+  - xgboost
+  - lightgbm
+  - catboost
+  - mlp
+model_overrides: {}
+selection_rationale: "Smoke test only — verify pipeline wiring."

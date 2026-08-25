@@ -1,0 +1,3 @@
+"""Explainable Diabetes AI — research pipeline package."""
+
+__version__ = "0.1.0"

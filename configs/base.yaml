@@ -1,0 +1,70 @@
+project:
+  name: explainable-diabetes-ai
+  title: "Enhancing Clinical Decision Support through Explainable AI: Interpretable Machine Learning for Diabetes Risk Prediction"
+  intended_use: "Preliminary diabetes risk screening aid — NOT a diagnostic device"
+
+reproducibility:
+  random_seed: 42
+  n_jobs: -1
+
+data:
+  dataset_name: cdc_brfss2015_diabetes_binary
+  dataset_version: brfss2015-clean-v1
+  raw_filename: diabetes_binary_health_indicators_BRFSS2015.csv
+  target_column: Diabetes_binary
+  # UCI ML Repository / Kaggle CDC Diabetes Health Indicators (binary extract)
+  download_urls:
+    - "https://raw.githubusercontent.com/plotly/datasets/master/diabetes.csv"  # placeholder guard — real download via scripts/download_dataset.py
+  expected_n_rows_approx: 253680
+  expected_n_features: 21
+  class_imbalance_note: "~86% negative / ~14% positive (diabetes or prediabetes binary)"
+
+split:
+  train_ratio: 0.70
+  validation_ratio: 0.15
+  test_ratio: 0.15
+  stratify: true
+  split_version: split-v1
+
+preprocessing:
+  # Defensive imputation fitted on train only
+  impute_continuous: median
+  impute_categorical: most_frequent
+  # BMI IQR capping thresholds learned on train only
+  bmi_iqr_cap: true
+  bmi_iqr_multiplier: 1.5
+  # SMOTE only inside training / CV training folds
+  use_smote: true
+  smote_random_state: 42
+  smote_k_neighbors: 5
+
+training:
+  cv_folds: 5
+  primary_metric: f1  # imbalanced screening — do not optimise raw accuracy alone
+  tuning_trials_simple: 20
+  tuning_trials_heavy: 40
+  # Official Phase-1 full run requires confirmed five-model list
+  official_phase1_locked: false
+
+evaluation:
+  default_threshold: 0.5
+  bootstrap_ci_samples: 200
+  calibrate: true
+  calibration_method: isotonic  # fitted on validation only
+
+explainability:
+  shap_background_size: 200
+  lime_num_samples: 1000
+  lime_stability_repeats: 5
+  top_k: 5
+  agreement_top_k: 3
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  splits_dir: artifacts/splits
+  experiments_dir: artifacts/experiments
+  models_dir: artifacts/models
+  production_dir: artifacts/production
+  results_dir: results/phase1
+  reports_dir: reports

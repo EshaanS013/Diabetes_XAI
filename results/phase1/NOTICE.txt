@@ -1,0 +1,8 @@
+# Development Phase-1 results (NOT official)
+
+These numbers come from `configs/experiments/phase1_dev.yaml`:
+- stratified train subsample of 25,000
+- validation-tuned decision thresholds (F1)
+- proposed five models (pending supervisor confirmation)
+
+**Do not put these in the paper/panel as final results** until a confirmed full-data official run is completed.

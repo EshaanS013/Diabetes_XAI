@@ -1,0 +1,10 @@
+{
+  "status": "prepared",
+  "processed_path": "C:\\Users\\Eshaan Sarkhawas\\OneDrive\\Desktop\\Diabetes_XAI\\data\\processed\\dataset.csv",
+  "dataset_hash": "4b702ecd2e80e431148cf29f12158928a2b401e97a65ddb7293ad5e6dc1a6f60",
+  "split_sizes": {
+    "train": 177575,
+    "validation": 38052,
+    "test": 38053
+  }
+}

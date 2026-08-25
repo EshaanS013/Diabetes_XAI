@@ -1,0 +1,2308 @@
+{
+  "artifact_path": "artifacts/production/model.joblib",
+  "n_samples": 15,
+  "aggregate_concordance": {
+    "n": 15,
+    "mean_jaccard": 0.66,
+    "exact_top_k_agreement_rate": 0.4666666666666667,
+    "interpretation": "Measures SHAP/LIME explanation concordance only. Does NOT measure predictive confidence or clinical correctness."
+  },
+  "instances": [
+    {
+      "row_index": 134985,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.027625875233043187,
+        "HighChol": 0.019209927615675082,
+        "CholCheck": 0.0004628341351074518,
+        "BMI": -0.046523980192286075,
+        "Smoker": -5.5440108273291406e-05,
+        "Stroke": -0.00037650340500016956,
+        "HeartDiseaseorAttack": -0.00011796654924489859,
+        "PhysActivity": 0.0007297501586437575,
+        "Fruits": -0.0003723757053241653,
+        "Veggies": 0.0011319942799595953,
+        "HvyAlcoholConsump": 0.0014893731412670829,
+        "AnyHealthcare": 0.0006314392936831931,
+        "NoDocbcCost": 0.0008969150522248848,
+        "GenHlth": -0.061882305624817106,
+        "MentHlth": 0.0004954061813440753,
+        "PhysHlth": 0.0008320807128384239,
+        "DiffWalk": -0.0017558527066273454,
+        "Sex": -0.005026005078329899,
+        "Age": -0.008869989649911975,
+        "Education": -0.004265348760175315,
+        "Income": -0.0055695356893246985
+      },
+      "lime": {
+        "HighBP": -0.05978946221842573,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": -0.07507575808104722,
+        "Smoker": 0.011338332528387403,
+        "Stroke": 0.008416669624645845,
+        "HeartDiseaseorAttack": -0.0030995125510655474,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.047322254654903875,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.027066345205322383,
+        "GenHlth": -0.09171255726089576,
+        "MentHlth": 0.0019560816958829807,
+        "PhysHlth": 0.0,
+        "DiffWalk": 0.0028212969068693392,
+        "Sex": -0.022260740140231952,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 6.916278999997303,
+      "lime_seconds": 0.02787059999536723,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighBP"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.061882305624817106,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.046523980192286075,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.027625875233043187,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.019209927615675082,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.008869989649911975,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09171255726089576,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.07507575808104722,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05978946221842573,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.047322254654903875,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.027066345205322383,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 173031,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.024419579617922047,
+        "HighChol": -0.018234829446228465,
+        "CholCheck": -0.03459798257338286,
+        "BMI": -0.041588328524371956,
+        "Smoker": 4.9135575741567136e-05,
+        "Stroke": -0.000332889219965473,
+        "HeartDiseaseorAttack": -5.894401418465993e-05,
+        "PhysActivity": 0.0005080054014816808,
+        "Fruits": 0.00041634591030659273,
+        "Veggies": 0.0010069440650318337,
+        "HvyAlcoholConsump": 0.0012762359423577091,
+        "AnyHealthcare": 0.0003815681648448706,
+        "NoDocbcCost": 0.0008353001421026129,
+        "GenHlth": 0.00048397106893076423,
+        "MentHlth": 0.0005389583632437738,
+        "PhysHlth": 0.001395773917623747,
+        "DiffWalk": -0.0018752019770165705,
+        "Sex": -0.00469710751000483,
+        "Age": -0.03229983140381642,
+        "Education": 0.0032217920760705047,
+        "Income": 0.002808902675872915
+      },
+      "lime": {
+        "HighBP": -0.060711031984041125,
+        "HighChol": -0.05114117566743344,
+        "CholCheck": 0.0,
+        "BMI": -0.07394033780155615,
+        "Smoker": 0.0,
+        "Stroke": -0.002505760943472903,
+        "HeartDiseaseorAttack": -0.00018532936594709126,
+        "PhysActivity": 0.0,
+        "Fruits": 0.009265670217055573,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.04181218895503219,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.020541354195423897,
+        "GenHlth": 0.0,
+        "MentHlth": 0.0027746202302019766,
+        "PhysHlth": 0.002364390880853197,
+        "DiffWalk": -0.00531138280596876,
+        "Sex": -0.021496145837100845,
+        "Age": -0.0752666889874416,
+        "Education": 0.001784366339537662,
+        "Income": 0.009869127469809977
+      },
+      "shap_seconds": 0.05703140000696294,
+      "lime_seconds": 0.02164019999327138,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "CholCheck",
+          "Age"
+        ],
+        "lime_top_features": [
+          "Age",
+          "BMI",
+          "HighBP"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 2,
+        "jaccard_overlap": 0.5,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": -0.041588328524371956,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "CholCheck",
+          "contribution": -0.03459798257338286,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'CholCheck' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.03229983140381642,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.024419579617922047,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.018234829446228465,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "Age",
+          "contribution": -0.0752666889874416,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.07394033780155615,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.060711031984041125,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.05114117566743344,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.04181218895503219,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 179696,
+      "true_label": 1,
+      "shap": {
+        "HighBP": 0.050283559836414284,
+        "HighChol": 0.05085470229920597,
+        "CholCheck": 0.0027142584813906537,
+        "BMI": -0.032202791585182314,
+        "Smoker": 0.00012512863320267488,
+        "Stroke": 0.00926710112697064,
+        "HeartDiseaseorAttack": -0.0002266291542820981,
+        "PhysActivity": 0.0019112985629453135,
+        "Fruits": -0.0006623996849191446,
+        "Veggies": 0.0025303889976830067,
+        "HvyAlcoholConsump": 0.005248071861476119,
+        "AnyHealthcare": 0.0013914435436595855,
+        "NoDocbcCost": 0.0018980070810266634,
+        "GenHlth": 0.09400146375436136,
+        "MentHlth": 0.0016375862221975573,
+        "PhysHlth": -0.0013393748332591023,
+        "DiffWalk": 0.010627581100104828,
+        "Sex": -0.014830910566431954,
+        "Age": 0.054543374029555156,
+        "Education": 0.009258515410663592,
+        "Income": 0.013579381190350365
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.0,
+        "Stroke": 0.0058482992564043,
+        "HeartDiseaseorAttack": -0.007160716446459375,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.046921691107911175,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.024128843771569295,
+        "GenHlth": 0.10865438986887449,
+        "MentHlth": 0.005764725955365085,
+        "PhysHlth": 0.0039004614465499602,
+        "DiffWalk": 0.0019317077650617982,
+        "Sex": -0.016119313426594284,
+        "Age": 0.0,
+        "Education": -0.00037628537724267375,
+        "Income": 0.013386117914023637
+      },
+      "shap_seconds": 0.058160899992799386,
+      "lime_seconds": 0.01869799999985844,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "Age",
+          "HighChol"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "HvyAlcoholConsump",
+          "NoDocbcCost"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 1,
+        "jaccard_overlap": 0.2,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": 0.09400146375436136,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.054543374029555156,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.05085470229920597,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.050283559836414284,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.032202791585182314,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": 0.10865438986887449,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.046921691107911175,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.024128843771569295,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.016119313426594284,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Income",
+          "contribution": 0.013386117914023637,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'Income' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 113937,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.016820889039190854,
+        "HighChol": -0.013256389450510907,
+        "CholCheck": 0.00019229940052964593,
+        "BMI": -0.031363765926969926,
+        "Smoker": -3.720835537453337e-05,
+        "Stroke": -0.00021557297659951564,
+        "HeartDiseaseorAttack": -8.350245878234094e-05,
+        "PhysActivity": 0.0005000665075272825,
+        "Fruits": -0.00029671911280299744,
+        "Veggies": 0.0006105319422491641,
+        "HvyAlcoholConsump": -0.021649569101957387,
+        "AnyHealthcare": 0.0003201351787773012,
+        "NoDocbcCost": 0.0006098211206843426,
+        "GenHlth": -0.03625760484879756,
+        "MentHlth": 0.0003723459105387324,
+        "PhysHlth": 0.0012466552862812547,
+        "DiffWalk": -0.001454512046708937,
+        "Sex": -0.00315451251568729,
+        "Age": -0.022688749408681423,
+        "Education": -0.0025924459164879277,
+        "Income": -0.003851007225881792
+      },
+      "lime": {
+        "HighBP": -0.059533375712978405,
+        "HighChol": -0.0503922997812764,
+        "CholCheck": 0.0,
+        "BMI": -0.0743284606217183,
+        "Smoker": 0.0080458870267285,
+        "Stroke": 0.0025013763802284737,
+        "HeartDiseaseorAttack": -0.000668696692345301,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": -0.04395298646831897,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.02468958441023189,
+        "GenHlth": -0.08830060227831114,
+        "MentHlth": 0.0031193198597409552,
+        "PhysHlth": 0.0015672512669295143,
+        "DiffWalk": -0.0013111695896579787,
+        "Sex": -0.021894595923806145,
+        "Age": -0.07152113511406565,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.05796020000707358,
+      "lime_seconds": 0.019443500001216307,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "BMI",
+          "Age"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "Age"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.03625760484879756,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.031363765926969926,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.022688749408681423,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": -0.021649569101957387,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.016820889039190854,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.08830060227831114,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.0743284606217183,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.07152113511406565,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.059533375712978405,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.0503922997812764,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 65572,
+      "true_label": 1,
+      "shap": {
+        "HighBP": 0.038390231470278244,
+        "HighChol": -0.035650338649206074,
+        "CholCheck": 0.0018633024331098029,
+        "BMI": -0.04751089656343439,
+        "Smoker": -8.31534055134744e-05,
+        "Stroke": -0.0005336792094004903,
+        "HeartDiseaseorAttack": -0.00020771854328644114,
+        "PhysActivity": 0.0014022895801561212,
+        "Fruits": -0.0005349335364818343,
+        "Veggies": 0.0016866443069088863,
+        "HvyAlcoholConsump": 0.0038720660755784215,
+        "AnyHealthcare": 0.0009454213962072406,
+        "NoDocbcCost": 0.0017300468952081566,
+        "GenHlth": 0.01303812429458206,
+        "MentHlth": 0.001224820842870176,
+        "PhysHlth": 0.0023736289059018145,
+        "DiffWalk": -0.0026480678071037554,
+        "Sex": -0.009388317080398535,
+        "Age": 0.041464002894256204,
+        "Education": 0.008663833537788027,
+        "Income": 0.007238950244028727
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": -0.05673590761151157,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.011008939396836706,
+        "Stroke": -0.00277861485853408,
+        "HeartDiseaseorAttack": -0.004957415684085637,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.0467589107494957,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.022901539798729307,
+        "GenHlth": 0.0,
+        "MentHlth": 0.002691263080204986,
+        "PhysHlth": -0.0035256433384825304,
+        "DiffWalk": -0.0017694461387238601,
+        "Sex": -0.020467253965070854,
+        "Age": 0.0,
+        "Education": -0.0007352677995216489,
+        "Income": 0.010787742002815971
+      },
+      "shap_seconds": 0.0550879999937024,
+      "lime_seconds": 0.019563399982871488,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "Age",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "HighChol",
+          "HvyAlcoholConsump",
+          "NoDocbcCost"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 0,
+        "jaccard_overlap": 0.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": -0.04751089656343439,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.041464002894256204,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.038390231470278244,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.035650338649206074,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": 0.01303812429458206,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "HighChol",
+          "contribution": -0.05673590761151157,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.0467589107494957,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.022901539798729307,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.020467253965070854,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Smoker",
+          "contribution": 0.011008939396836706,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'Smoker' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 166251,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.023127094729162946,
+        "HighChol": -0.016958382803725122,
+        "CholCheck": 0.0003260054154678022,
+        "BMI": -0.0472158682862553,
+        "Smoker": -5.1922624853400964e-05,
+        "Stroke": -0.00026587056245550955,
+        "HeartDiseaseorAttack": -0.00013708764041369027,
+        "PhysActivity": 0.0006535958969577023,
+        "Fruits": -0.00025124015151108825,
+        "Veggies": 0.0009100273112236732,
+        "HvyAlcoholConsump": 0.001107941396969436,
+        "AnyHealthcare": 0.0004776094215975118,
+        "NoDocbcCost": 0.0007474917122643449,
+        "GenHlth": -0.02585812206831091,
+        "MentHlth": 0.0003093598228546068,
+        "PhysHlth": 0.0012718506581005714,
+        "DiffWalk": -0.001520047923590192,
+        "Sex": -0.00433854944336727,
+        "Age": -0.022917863902444147,
+        "Education": -0.0037256639227305835,
+        "Income": -0.004617928559900216
+      },
+      "lime": {
+        "HighBP": -0.05962780272140496,
+        "HighChol": -0.05047645563950846,
+        "CholCheck": 0.0,
+        "BMI": -0.07477780006189695,
+        "Smoker": 0.007644271619531201,
+        "Stroke": 0.0028223048566159343,
+        "HeartDiseaseorAttack": -0.0009017621623733102,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.0456532258397569,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.0243946704050478,
+        "GenHlth": -0.08884836291349119,
+        "MentHlth": 0.0,
+        "PhysHlth": 0.001099960775236345,
+        "DiffWalk": -0.0018251387217326118,
+        "Sex": -0.021958702390058718,
+        "Age": -0.07200754368252257,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.06611519999569282,
+      "lime_seconds": 0.0333964999881573,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "GenHlth",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "Age"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 2,
+        "jaccard_overlap": 0.5,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": -0.0472158682862553,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": -0.02585812206831091,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.023127094729162946,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.022917863902444147,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.016958382803725122,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.08884836291349119,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.07477780006189695,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.07200754368252257,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05962780272140496,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.05047645563950846,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 90390,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.026612097586976212,
+        "HighChol": -0.01926485546542272,
+        "CholCheck": 0.00037912966351834934,
+        "BMI": -0.037949899582269145,
+        "Smoker": -5.5367556989930246e-05,
+        "Stroke": -0.00038315648389744095,
+        "HeartDiseaseorAttack": -0.0001792286368831113,
+        "PhysActivity": 0.0007533286005275155,
+        "Fruits": -0.000743466260137401,
+        "Veggies": 0.0011086063366293082,
+        "HvyAlcoholConsump": 0.0014058902536348936,
+        "AnyHealthcare": 0.0004752197697114909,
+        "NoDocbcCost": 0.0009490460160086453,
+        "GenHlth": -0.05722814636144065,
+        "MentHlth": 0.0005360617170688391,
+        "PhysHlth": 0.0015207411539564766,
+        "DiffWalk": -0.0019225651281032342,
+        "Sex": -0.004661111966319752,
+        "Age": -0.0004261571244347744,
+        "Education": -0.0006194831957415509,
+        "Income": 0.0005594396678282458
+      },
+      "lime": {
+        "HighBP": -0.05976370155182938,
+        "HighChol": -0.05056689727240589,
+        "CholCheck": 0.0,
+        "BMI": -0.07433722037023159,
+        "Smoker": 0.010638477274584642,
+        "Stroke": 0.008716353469100418,
+        "HeartDiseaseorAttack": -0.002805662119890622,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.044781318989389106,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.02770373498909575,
+        "GenHlth": -0.09073861069604953,
+        "MentHlth": 0.0016259434871555962,
+        "PhysHlth": 0.00038349137451146987,
+        "DiffWalk": 0.0036188593013371066,
+        "Sex": -0.023055237899646884,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.06401659999391995,
+      "lime_seconds": 0.01554510000278242,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighBP"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.05722814636144065,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.037949899582269145,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.026612097586976212,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.01926485546542272,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.004661111966319752,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09073861069604953,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.07433722037023159,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05976370155182938,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.05056689727240589,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.044781318989389106,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 198827,
+      "true_label": 0,
+      "shap": {
+        "HighBP": 0.04774502609859495,
+        "HighChol": 0.05066583015148616,
+        "CholCheck": 0.002534119563671527,
+        "BMI": 0.09961505231797271,
+        "Smoker": -0.00012026895592265834,
+        "Stroke": -0.0006087022587288402,
+        "HeartDiseaseorAttack": -0.0001353447992169016,
+        "PhysActivity": 0.0017621813238663602,
+        "Fruits": -0.0005704981202853721,
+        "Veggies": 0.0020311705446038543,
+        "HvyAlcoholConsump": 0.005149975721145234,
+        "AnyHealthcare": 0.0010562810577645493,
+        "NoDocbcCost": 0.0015698141250650966,
+        "GenHlth": -0.05102259329049981,
+        "MentHlth": 0.0015609320865988938,
+        "PhysHlth": 0.0026442172100530816,
+        "DiffWalk": -0.0033230910676591424,
+        "Sex": -0.011252724932450244,
+        "Age": 0.09464767013599568,
+        "Education": -0.008025242621821525,
+        "Income": -0.005866081915892624
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": 0.14018579176447962,
+        "Smoker": 0.00947136790072366,
+        "Stroke": 0.001680930531939334,
+        "HeartDiseaseorAttack": -0.00538306199777504,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.049182653105835104,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.02179074684611398,
+        "GenHlth": -0.09805927367170571,
+        "MentHlth": 0.0016886868037833702,
+        "PhysHlth": 0.005969312166760789,
+        "DiffWalk": -0.004354886303695118,
+        "Sex": -0.02330115900401735,
+        "Age": 0.058312530176577296,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.05173139998805709,
+      "lime_seconds": 0.022497600002679974,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "Age",
+          "GenHlth"
+        ],
+        "lime_top_features": [
+          "BMI",
+          "GenHlth",
+          "Age"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": 0.09961505231797271,
+          "direction": "positive",
+          "patient_safe_description": "Higher body-mass index contributed to the elevated risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.09464767013599568,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": -0.05102259329049981,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.05066583015148616,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.04774502609859495,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "BMI",
+          "contribution": 0.14018579176447962,
+          "direction": "positive",
+          "patient_safe_description": "Higher body-mass index contributed to the elevated risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09805927367170571,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.058312530176577296,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.049182653105835104,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.02330115900401735,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 180647,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.026609939353778787,
+        "HighChol": -0.020593086436084377,
+        "CholCheck": 0.00042862042399313926,
+        "BMI": -0.014060012078680573,
+        "Smoker": -9.533050238117289e-05,
+        "Stroke": -0.00032987027839014217,
+        "HeartDiseaseorAttack": -0.00010942357405538915,
+        "PhysActivity": 0.0006866362911393586,
+        "Fruits": -0.00036992859082907273,
+        "Veggies": 0.0013266335104476056,
+        "HvyAlcoholConsump": 0.001447726641077101,
+        "AnyHealthcare": 0.0005208700658448462,
+        "NoDocbcCost": 0.0009399040976322832,
+        "GenHlth": -0.02935714395637073,
+        "MentHlth": 0.00010907330085203025,
+        "PhysHlth": 0.0015648621929056335,
+        "DiffWalk": -0.002016301261730829,
+        "Sex": -0.004673905403294829,
+        "Age": -0.03579504529988532,
+        "Education": -0.004441063446495404,
+        "Income": -0.005134734473529956
+      },
+      "lime": {
+        "HighBP": -0.05843889382709652,
+        "HighChol": -0.053037675241281085,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.010255081063549163,
+        "Stroke": -0.00028968556613994507,
+        "HeartDiseaseorAttack": -0.003932316839486343,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.04653499551160313,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.027568156345879627,
+        "GenHlth": -0.08834538753456775,
+        "MentHlth": 0.0,
+        "PhysHlth": -0.002691772401321886,
+        "DiffWalk": -0.0013030225610730886,
+        "Sex": -0.021168265384365594,
+        "Age": -0.07145867986914203,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.06251150000025518,
+      "lime_seconds": 0.021432299981825054,
+      "agreement": {
+        "shap_top_features": [
+          "Age",
+          "GenHlth",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "Age",
+          "HighBP"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "Age",
+          "contribution": -0.03579504529988532,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": -0.02935714395637073,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.026609939353778787,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.020593086436084377,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.014060012078680573,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.08834538753456775,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.07145867986914203,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05843889382709652,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.053037675241281085,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.04653499551160313,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 32015,
+      "true_label": 0,
+      "shap": {
+        "HighBP": 0.038283964357601924,
+        "HighChol": 0.04080222855521875,
+        "CholCheck": 0.0017636960330868515,
+        "BMI": -0.040977250074725365,
+        "Smoker": 0.00017677763250631103,
+        "Stroke": -0.0006228025386379922,
+        "HeartDiseaseorAttack": -0.00031482619555604394,
+        "PhysActivity": 0.001061764936022195,
+        "Fruits": -0.0005028418091256586,
+        "Veggies": 0.0016072184137429395,
+        "HvyAlcoholConsump": 0.003850953326805038,
+        "AnyHealthcare": 0.0010664014580386723,
+        "NoDocbcCost": 0.0017787942152078455,
+        "GenHlth": -0.049310324986324934,
+        "MentHlth": 0.0010961623482748783,
+        "PhysHlth": 0.002448517911951868,
+        "DiffWalk": 0.006617610166692198,
+        "Sex": 0.011146233133362283,
+        "Age": 0.02127652197408485,
+        "Education": -0.008935071094170875,
+        "Income": -0.003517654135234634
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.0,
+        "Stroke": 0.0020163341595817764,
+        "HeartDiseaseorAttack": -0.006200195370542486,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.05055850257821115,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.0282035753002544,
+        "GenHlth": -0.09158447602433635,
+        "MentHlth": 0.0015005909315850179,
+        "PhysHlth": -0.0028819238112399734,
+        "DiffWalk": -0.0013088577021271495,
+        "Sex": 0.0,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.0536693999893032,
+      "lime_seconds": 0.018991699995240197,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighChol"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "HvyAlcoholConsump",
+          "NoDocbcCost"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 1,
+        "jaccard_overlap": 0.2,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.049310324986324934,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.040977250074725365,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.04080222855521875,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.038283964357601924,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.02127652197408485,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09158447602433635,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.05055850257821115,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.0282035753002544,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HeartDiseaseorAttack",
+          "contribution": -0.006200195370542486,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HeartDiseaseorAttack' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "PhysHlth",
+          "contribution": -0.0028819238112399734,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'PhysHlth' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 218786,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.028446772519642415,
+        "HighChol": -0.021278551171497188,
+        "CholCheck": 0.000518089364186147,
+        "BMI": -0.025517971056152212,
+        "Smoker": -5.526795523125136e-05,
+        "Stroke": -0.0003095626360182579,
+        "HeartDiseaseorAttack": -0.00016380286114802835,
+        "PhysActivity": 0.0010850722336061417,
+        "Fruits": -0.0003043405561062841,
+        "Veggies": -0.0031638617533827173,
+        "HvyAlcoholConsump": 0.00161773238028552,
+        "AnyHealthcare": 0.0006600736073057885,
+        "NoDocbcCost": 0.0011815535669938966,
+        "GenHlth": -0.03301200404224102,
+        "MentHlth": 0.0006982267173807396,
+        "PhysHlth": 0.0017691456005738153,
+        "DiffWalk": -0.0022268096801152195,
+        "Sex": -0.005361611681762226,
+        "Age": -0.009940079473245962,
+        "Education": -0.00487334580177188,
+        "Income": -0.0033803081367645036
+      },
+      "lime": {
+        "HighBP": -0.05936016332185559,
+        "HighChol": -0.05452049023397821,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.012817538551458733,
+        "Stroke": 0.005234684494342679,
+        "HeartDiseaseorAttack": -0.008182828608657077,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.04906059650410889,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.02976537790319508,
+        "GenHlth": -0.09152307298840455,
+        "MentHlth": 0.0023590524629699904,
+        "PhysHlth": -0.00414219369707896,
+        "DiffWalk": 0.003252431506226535,
+        "Sex": -0.020830199550322514,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.05604930000845343,
+      "lime_seconds": 0.01893759999074973,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "HighBP",
+          "BMI"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "HighBP",
+          "HighChol"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 2,
+        "jaccard_overlap": 0.5,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.03301200404224102,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.028446772519642415,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.025517971056152212,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.021278551171497188,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.009940079473245962,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09152307298840455,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05936016332185559,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.05452049023397821,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.04906059650410889,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.02976537790319508,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 210313,
+      "true_label": 1,
+      "shap": {
+        "HighBP": 0.05122398410418263,
+        "HighChol": 0.05134887047757024,
+        "CholCheck": 0.002430125662669981,
+        "BMI": 0.16625062157610906,
+        "Smoker": -0.00015036008482323266,
+        "Stroke": -0.0006082864823339552,
+        "HeartDiseaseorAttack": 0.0019772233363894607,
+        "PhysActivity": -0.004073137198203547,
+        "Fruits": -0.0007626700785243707,
+        "Veggies": 0.002199982232413073,
+        "HvyAlcoholConsump": 0.004835444837034173,
+        "AnyHealthcare": 0.0010786389464328807,
+        "NoDocbcCost": 0.001778020162216349,
+        "GenHlth": 0.09061982920815957,
+        "MentHlth": 0.0013147732163534328,
+        "PhysHlth": -0.01696900756359526,
+        "DiffWalk": 0.009431552224544297,
+        "Sex": -0.013285347021355844,
+        "Age": 0.026725565350914072,
+        "Education": 0.0005591285649746463,
+        "Income": -0.011302790885785672
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": 0.13702914916153142,
+        "Smoker": 0.0038583932702946494,
+        "Stroke": -0.00795745963106963,
+        "HeartDiseaseorAttack": 0.003365873235908407,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.04666954121867143,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.014272284228372678,
+        "GenHlth": 0.11572192370958961,
+        "MentHlth": 0.00502183979639271,
+        "PhysHlth": -0.0008677330745988562,
+        "DiffWalk": 0.009214708716515925,
+        "Sex": -0.01875430754166104,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.062145000003511086,
+      "lime_seconds": 0.0183275000017602,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "GenHlth",
+          "HighChol"
+        ],
+        "lime_top_features": [
+          "BMI",
+          "GenHlth",
+          "HvyAlcoholConsump"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 2,
+        "jaccard_overlap": 0.5,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": 0.16625062157610906,
+          "direction": "positive",
+          "patient_safe_description": "Higher body-mass index contributed to the elevated risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": 0.09061982920815957,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.05134887047757024,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.05122398410418263,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.026725565350914072,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "BMI",
+          "contribution": 0.13702914916153142,
+          "direction": "positive",
+          "patient_safe_description": "Higher body-mass index contributed to the elevated risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": 0.11572192370958961,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.04666954121867143,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.01875430754166104,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.014272284228372678,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 77771,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.019891657087879187,
+        "HighChol": -0.014425156232548043,
+        "CholCheck": 0.0002453099246724926,
+        "BMI": -0.03281290337187898,
+        "Smoker": -2.621661412328473e-05,
+        "Stroke": -0.0002493029352749593,
+        "HeartDiseaseorAttack": -5.8369796586985485e-05,
+        "PhysActivity": 0.0006647934452376302,
+        "Fruits": -0.00024264841178195628,
+        "Veggies": -0.0021796105653843997,
+        "HvyAlcoholConsump": 0.0009296811450267755,
+        "AnyHealthcare": 0.000434490838655107,
+        "NoDocbcCost": 0.0007844528813281013,
+        "GenHlth": -0.040940068808178784,
+        "MentHlth": 0.00036328442854459707,
+        "PhysHlth": 0.0013524320781071809,
+        "DiffWalk": -0.0013268929219759143,
+        "Sex": 0.004788312293889552,
+        "Age": -0.03995439982549617,
+        "Education": -0.0034454853271241284,
+        "Income": -0.002614815390264175
+      },
+      "lime": {
+        "HighBP": -0.05963039288942583,
+        "HighChol": -0.050771135341392465,
+        "CholCheck": 0.0,
+        "BMI": -0.07528572810644263,
+        "Smoker": 0.007810759330958211,
+        "Stroke": 0.00271624984261092,
+        "HeartDiseaseorAttack": -0.0007567857728733269,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.04582702860680013,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.024435639466092927,
+        "GenHlth": -0.0890319846117382,
+        "MentHlth": 0.0030436909634672907,
+        "PhysHlth": 0.0014542653080305157,
+        "DiffWalk": -0.001084430671157724,
+        "Sex": 0.0,
+        "Age": -0.07233292440036238,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.061234099994180724,
+      "lime_seconds": 0.022416099993279204,
+      "agreement": {
+        "shap_top_features": [
+          "GenHlth",
+          "Age",
+          "BMI"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "Age"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.040940068808178784,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.03995439982549617,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.03281290337187898,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.019891657087879187,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.014425156232548043,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.0890319846117382,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.07528572810644263,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": -0.07233292440036238,
+          "direction": "negative",
+          "patient_safe_description": "Younger age category contributed toward a lower risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.05963039288942583,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.050771135341392465,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 69995,
+      "true_label": 0,
+      "shap": {
+        "HighBP": 0.04112505763207233,
+        "HighChol": 0.04369220488349934,
+        "CholCheck": 0.0019682311894973323,
+        "BMI": -0.0376004979017746,
+        "Smoker": 5.134391381190093e-05,
+        "Stroke": -0.0005715739031548118,
+        "HeartDiseaseorAttack": 0.004701977707454765,
+        "PhysActivity": 0.0018738077830542112,
+        "Fruits": 0.002525896451937974,
+        "Veggies": 0.0023577620149172886,
+        "HvyAlcoholConsump": 0.004258652334797259,
+        "AnyHealthcare": 0.0014085716013542636,
+        "NoDocbcCost": 0.0017900516486317219,
+        "GenHlth": -0.0470739991310034,
+        "MentHlth": 0.0019120179233622807,
+        "PhysHlth": 0.003094843667916389,
+        "DiffWalk": -0.002706719284573336,
+        "Sex": -0.01055365366514374,
+        "Age": 0.06162079503499099,
+        "Education": 0.0012896553504893687,
+        "Income": -0.0014700636072041493
+      },
+      "lime": {
+        "HighBP": 0.0,
+        "HighChol": 0.0,
+        "CholCheck": 0.0,
+        "BMI": 0.0,
+        "Smoker": 0.0,
+        "Stroke": 0.007263109896595836,
+        "HeartDiseaseorAttack": 0.0114960600472086,
+        "PhysActivity": 0.0,
+        "Fruits": 0.0022291200522336126,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.045384051248380644,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.032998709548128516,
+        "GenHlth": -0.09142527044525886,
+        "MentHlth": 0.0006529119510590729,
+        "PhysHlth": -0.0021394561108115597,
+        "DiffWalk": 0.002792922304819257,
+        "Sex": -0.021010808376251286,
+        "Age": 0.05709249027479029,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.057060199993429706,
+      "lime_seconds": 0.018931500002508983,
+      "agreement": {
+        "shap_top_features": [
+          "Age",
+          "GenHlth",
+          "HighChol"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "Age",
+          "HvyAlcoholConsump"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": false,
+        "overlap_count": 2,
+        "jaccard_overlap": 0.5,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "Age",
+          "contribution": 0.06162079503499099,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": -0.0470739991310034,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": 0.04369220488349934,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HighChol' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": 0.04112505763207233,
+          "direction": "positive",
+          "patient_safe_description": "A history of high blood pressure contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.0376004979017746,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": -0.09142527044525886,
+          "direction": "negative",
+          "patient_safe_description": "Better self-rated general health contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Age",
+          "contribution": 0.05709249027479029,
+          "direction": "positive",
+          "patient_safe_description": "Older age category contributed to the elevated risk score (non-modifiable). This reflects model association, not proven causation.",
+          "modifiable": "false",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.045384051248380644,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "NoDocbcCost",
+          "contribution": 0.032998709548128516,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'NoDocbcCost' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": -0.021010808376251286,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'Sex' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    },
+    {
+      "row_index": 41796,
+      "true_label": 0,
+      "shap": {
+        "HighBP": -0.03848628392011021,
+        "HighChol": -0.029994769059320067,
+        "CholCheck": 0.0012648165535499105,
+        "BMI": -0.05914147669326612,
+        "Smoker": 0.00012133831987627055,
+        "Stroke": -0.0004027224730300964,
+        "HeartDiseaseorAttack": -0.00020003361140326074,
+        "PhysActivity": 0.0012304033507819596,
+        "Fruits": 0.0006053611442548155,
+        "Veggies": -0.004156603231749531,
+        "HvyAlcoholConsump": 0.0027614135059469912,
+        "AnyHealthcare": 0.0010724150065983095,
+        "NoDocbcCost": 0.0015684328494071516,
+        "GenHlth": 0.05412370387818657,
+        "MentHlth": 0.001064769218210193,
+        "PhysHlth": 0.00022606739112050397,
+        "DiffWalk": -0.0024638542262954634,
+        "Sex": 0.011999340643189343,
+        "Age": -0.01032325430942159,
+        "Education": 0.00045193710611795353,
+        "Income": -0.00011051339940838378
+      },
+      "lime": {
+        "HighBP": -0.06307663851999236,
+        "HighChol": -0.058737220587044864,
+        "CholCheck": 0.0,
+        "BMI": -0.0733147751850488,
+        "Smoker": 0.0,
+        "Stroke": 0.004761967438823002,
+        "HeartDiseaseorAttack": -0.003912628874341035,
+        "PhysActivity": 0.0,
+        "Fruits": 0.009021912144565434,
+        "Veggies": 0.0,
+        "HvyAlcoholConsump": 0.040030510100181986,
+        "AnyHealthcare": 0.0,
+        "NoDocbcCost": 0.02458188425238915,
+        "GenHlth": 0.10710484649294712,
+        "MentHlth": 0.0037345125805917697,
+        "PhysHlth": -0.0013023611551758998,
+        "DiffWalk": 0.0009750123938932024,
+        "Sex": 0.0,
+        "Age": 0.0,
+        "Education": 0.0,
+        "Income": 0.0
+      },
+      "shap_seconds": 0.05974729999434203,
+      "lime_seconds": 0.02515790000325069,
+      "agreement": {
+        "shap_top_features": [
+          "BMI",
+          "GenHlth",
+          "HighBP"
+        ],
+        "lime_top_features": [
+          "GenHlth",
+          "BMI",
+          "HighBP"
+        ],
+        "top_k": 3,
+        "exact_top_k_set_match": true,
+        "overlap_count": 3,
+        "jaccard_overlap": 1.0,
+        "note": "Explanation concordance only \u2014 NOT predictive confidence, certainty, or clinical truth."
+      },
+      "safe_explanations_shap": [
+        {
+          "feature": "BMI",
+          "contribution": -0.05914147669326612,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "GenHlth",
+          "contribution": 0.05412370387818657,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.03848628392011021,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.029994769059320067,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "Sex",
+          "contribution": 0.011999340643189343,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'Sex' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ],
+      "safe_explanations_lime": [
+        {
+          "feature": "GenHlth",
+          "contribution": 0.10710484649294712,
+          "direction": "positive",
+          "patient_safe_description": "Poorer self-rated general health contributed to the elevated risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "BMI",
+          "contribution": -0.0733147751850488,
+          "direction": "negative",
+          "patient_safe_description": "Lower body-mass index contributed toward a lower risk score in this model. This reflects model association, not proven causation.",
+          "modifiable": "true",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighBP",
+          "contribution": -0.06307663851999236,
+          "direction": "negative",
+          "patient_safe_description": "Absence of reported high blood pressure contributed toward a lower risk score. This reflects model association, not proven causation.",
+          "modifiable": "partially",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HighChol",
+          "contribution": -0.058737220587044864,
+          "direction": "negative",
+          "patient_safe_description": "Feature 'HighChol' decreased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        },
+        {
+          "feature": "HvyAlcoholConsump",
+          "contribution": 0.040030510100181986,
+          "direction": "positive",
+          "patient_safe_description": "Feature 'HvyAlcoholConsump' increased the model risk score (association, not causation). This reflects model association, not proven causation.",
+          "modifiable": "unknown",
+          "clinical_review_status": "pending"
+        }
+      ]
+    }
+  ],
+  "ethics_reminder": "SHAP and LIME are not causal inference. Agreement is not certainty. This system is a screening aid, not a diagnosis."
+}
