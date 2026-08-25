@@ -41,10 +41,10 @@ preprocessing:
 training:
   cv_folds: 5
   primary_metric: f1  # imbalanced screening — do not optimise raw accuracy alone
-  tuning_trials_simple: 20
-  tuning_trials_heavy: 40
-  # Official Phase-1 full run requires confirmed five-model list
-  official_phase1_locked: false
+  # Practical official budget: still multi-trial Bayesian/grid search on full data
+  tuning_trials_simple: 15
+  tuning_trials_heavy: 20
+  official_phase1_locked: true
 
 evaluation:
   default_threshold: 0.5

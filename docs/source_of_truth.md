@@ -29,7 +29,7 @@ When documents disagree, apply this order:
 | Stack | Flutter + FastAPI + Firebase | Same, AWS optional for compute | Preserved; FastAPI scaffolded; Flutter placeholder |
 | Results in paper | Expected metrics narrative | **Never fabricate results** | Paper uses `TBD - generated after experimental run` until measured |
 
-## Proposed Phase-1 five (NOT mentor-confirmed)
+## Phase-1 five — CONFIRMED (2026-08-25)
 
 1. `logistic_regression` — linear interpretable baseline (proposal)
 2. `random_forest` — bagging benchmark (proposal)
@@ -37,7 +37,7 @@ When documents disagree, apply this order:
 4. `lightgbm` — second booster for family comparison
 5. `mlp` — non-tree neural baseline
 
-**Action required:** Confirm or replace this list in `configs/phase1_models.yaml`, set `selection_status: confirmed` and `allow_official_phase1_run: true` before publishing official Phase-1 numbers.
+Confirmed by project owner. Config: `configs/phase1_models.yaml` (`selection_status: confirmed`).
 
 ## Immediate September milestone
 

@@ -1,25 +1,21 @@
 # Phase 1 model selection configuration
 #
-# STATUS: PROPOSED — PENDING SUPERVISOR / TEAM CONFIRMATION
+# STATUS: CONFIRMED by project owner (2026-08-25)
 #
-# Source reconciliation (see docs/source_of_truth.md):
-# - Original proposal benchmarks 3 models: Logistic Regression, Random Forest, XGBoost
-# - Master implementation prompt designs for 10 algorithms; Phase 1 runs five
-# - Latest supervisor instruction: compare five algorithms for September panel
-# - Exact five algorithms are NOT explicitly named in the supplied documents
+# Confirmed Phase-1 five (spanning linear, bagging, boosting x2, neural):
+#   logistic_regression, random_forest, xgboost, lightgbm, mlp
 #
-# This file therefore contains a RECOMMENDED five-model set spanning model families.
-# Do NOT treat this as mentor-approved until confirmed.
-# Official Phase-1 results must not be published until confirmation or an
-# explicit override of `selection_status` below.
+# See docs/source_of_truth.md for proposal vs supervisor reconciliation.
 
-selection_status: proposed_pending_confirmation
+selection_status: confirmed
+confirmed_on: "2026-08-25"
+confirmed_by: "project_owner"
 selection_rationale: >
-  Span linear, bagging, boosting (proposal primary), second booster (family comparison),
-  and neural net (non-tree family). Keeps proposal's LR/RF/XGBoost intact and adds
-  LightGBM + MLP for Phase-1 breadth without claiming mentor selection.
+  Confirmed five-model Phase-1 suite: Logistic Regression (linear baseline),
+  Random Forest (bagging), XGBoost (proposal primary booster), LightGBM
+  (second booster), MLP (non-tree neural). Architecture still supports all ten
+  registered algorithms for later phases.
 
-# Models included in Phase 1 official benchmark when selection_status is confirmed
 phase1_models:
   - logistic_regression
   - random_forest
@@ -27,7 +23,6 @@ phase1_models:
   - lightgbm
   - mlp
 
-# Full registry supported by codebase (architecture must support all ten)
 all_supported_models:
   - logistic_regression
   - naive_bayes
@@ -40,15 +35,12 @@ all_supported_models:
   - catboost
   - mlp
 
-# Per-model overrides (optional). Empty => defaults from model definition.
 model_overrides: {}
 
-# Optimisation objective for tuning (healthcare screening — imbalance-aware)
 primary_metric: f1
 cv_folds: 5
 
-# Set true only after human confirms the five-model list (or explicitly overrides)
-allow_official_phase1_run: false
+allow_official_phase1_run: true
 
-# Smoke / development: subsample training for pipeline verification (null = full data)
+# null = full training partition (official)
 dev_train_subsample: null
