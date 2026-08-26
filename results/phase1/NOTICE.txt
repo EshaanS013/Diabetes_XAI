@@ -1,9 +1,12 @@
 # Phase-1 results status
 
-**Official full-data Phase-1 run: IN PROGRESS** (started 2026-08-25 after model-list confirmation).
+**Official full-data Phase-1 run: COMPLETE** (2026-08-25/26)
 
 Confirmed models: logistic_regression, random_forest, xgboost, lightgbm, mlp  
-Config: `configs/phase1_models.yaml` (`selection_status: confirmed`)  
-Log: `artifacts/experiments/phase1_official.log`
+Experiments:
+- `20260825T171739Z_4aa740a6` — LR, RF, XGBoost, LightGBM
+- `20260826T152829Z_81d2eeac` — MLP
 
-Previous CSV/JSON in this folder may still reflect development (25k/80k) subsample runs until the official job finishes and overwrites them.
+Promoted (highest F1): **logistic_regression** → `artifacts/production/model.joblib`
+
+See `model_comparison.csv` for official measured metrics.

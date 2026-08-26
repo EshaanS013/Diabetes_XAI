@@ -1,7 +1,7 @@
 # Phase 1 Experiment Report
 
-**Generated:** 2026-08-25T17:06:35.795771+00:00
-**Model selection status:** `proposed_pending_confirmation`
+**Generated:** 2026-08-26T16:12:04.124620+00:00
+**Model selection status:** `confirmed`
 
 ## Important
 
@@ -18,17 +18,17 @@
 - `lightgbm`
 - `mlp`
 
-**Rationale (proposed):** Span linear, bagging, boosting (proposal primary), second booster (family comparison), and neural net (non-tree family). Keeps proposal's LR/RF/XGBoost intact and adds LightGBM + MLP for Phase-1 breadth without claiming mentor selection.
+**Rationale (proposed):** Confirmed five-model Phase-1 suite: Logistic Regression (linear baseline), Random Forest (bagging), XGBoost (proposal primary booster), LightGBM (second booster), MLP (non-tree neural). Architecture still supports all ten registered algorithms for later phases.
 
 ## Results
 
 ```
-              model          display_name    status  accuracy  precision   recall  specificity       f1  roc_auc   pr_auc  brier_score      ece  cv_best_score  training_time  inference_ms_per_row  decision_threshold  random_seed  calibrated metrics_split
-logistic_regression   Logistic Regression completed  0.782750   0.352707 0.669559     0.801075 0.462029 0.824347 0.422473     0.173295 0.234369       0.445055       7.594705              0.000327                0.59           42        True          test
-      random_forest         Random Forest completed  0.798965   0.366439 0.607507     0.829959 0.457139 0.817297 0.408797     0.122271 0.129404       0.436768      17.712300              0.003223                0.44           42        True          test
-            xgboost               XGBoost completed  0.788979   0.357083 0.642776     0.812647 0.459114 0.821547 0.423823     0.112799 0.117122       0.414538      11.450759              0.000777                0.36           42        True          test
-           lightgbm              LightGBM completed  0.784564   0.351761 0.648057     0.806662 0.456005 0.818040 0.418483     0.114679 0.121199       0.416481      10.368207              0.001380                0.36           42        True          test
-                mlp Multilayer Perceptron completed  0.788348   0.348758 0.598453     0.819089 0.440694 0.803798 0.387074     0.135373 0.132164       0.438469      89.141075              0.000543                0.48           42        True          test
+              model          display_name    status  accuracy  precision   recall  specificity       f1  roc_auc   pr_auc  brier_score      ece  cv_best_score  training_time  inference_ms_per_row  decision_threshold  random_seed  calibrated metrics_split         source_experiment
+           lightgbm              LightGBM completed  0.782882   0.349959 0.651075     0.804220 0.455229 0.817941 0.416741     0.118957 0.135402       0.434352     197.307989              0.001364                0.38           42        True          test 20260825T171739Z_4aa740a6
+logistic_regression   Logistic Regression completed  0.782882   0.352941 0.669936     0.801166 0.462319 0.824479 0.422357     0.173827 0.237441       0.443380      19.041758              0.000319                0.59           42        True          test 20260825T171739Z_4aa740a6
+                mlp Multilayer Perceptron completed  0.787034   0.354366 0.642965     0.810357 0.456909 0.819551 0.416340     0.151148 0.186369       0.446966    2027.015489              0.000570                0.54           42        True          test 20260826T152829Z_81d2eeac
+      random_forest         Random Forest completed  0.793499   0.359868 0.619012     0.821746 0.455138 0.813648 0.405164     0.143159 0.188063       0.450960     555.509748              0.001804                0.50           42        True          test 20260825T171739Z_4aa740a6
+            xgboost               XGBoost completed  0.784196   0.350247 0.641833     0.807243 0.453190 0.808575 0.403803     0.147349 0.207948       0.444278     172.951350              0.000476                0.48           42        True          test 20260825T171739Z_4aa740a6
 ```
 
 ### Model selection discussion (template)

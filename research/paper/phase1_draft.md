@@ -53,42 +53,41 @@ SHAP and LIME local attributions; top-k concordance (Jaccard / exact set match).
 
 ## 6. Results
 
-> **Label:** Phase-1 **development** benchmark (25k stratified train subsample).  
-> **Not** the official full-data Phase-1 result. Replace after confirmation + full run.
+> **Label:** Official full-data Phase-1 benchmark (confirmed five models; full training partition; validation-tuned F1 thresholds).  
+> Experiments: `20260825T171739Z_4aa740a6` + `20260826T152829Z_81d2eeac`.
 
-Measured development comparison (`results/phase1/model_comparison.csv`):
+Measured held-out **test** comparison (`results/phase1/model_comparison.csv`):
 
 | Model | Recall | F1 | ROC-AUC | Precision | Threshold |
 |---|---:|---:|---:|---:|---:|
-| Logistic Regression | 0.656 | 0.465 | 0.824 | 0.360 | 0.60 |
-| Random Forest | 0.643 | 0.449 | 0.815 | 0.345 | 0.38 |
-| XGBoost | 0.624 | 0.454 | 0.818 | 0.356 | 0.34 |
-| LightGBM | 0.658 | 0.448 | 0.817 | 0.340 | 0.32 |
-| MLP | 0.627 | 0.456 | 0.819 | 0.358 | 0.58 |
+| Logistic Regression | 0.670 | **0.462** | **0.824** | 0.353 | 0.59 |
+| MLP | 0.643 | 0.457 | 0.820 | 0.354 | 0.54 |
+| LightGBM | 0.651 | 0.455 | 0.818 | 0.350 | 0.38 |
+| Random Forest | 0.619 | 0.455 | 0.814 | 0.360 | 0.50 |
+| XGBoost | 0.642 | 0.453 | 0.809 | 0.350 | 0.48 |
 
-On this development run, Logistic Regression led F1 and ROC-AUC; LightGBM led recall.  
-**Production choice remains TBD** pending full-data official run and multi-criteria review (see `reports/model_selection_report.md`).
+**Selected production candidate (Phase 1):** Logistic Regression — highest F1 and ROC-AUC on the official test split, lowest inference latency, native coefficient interpretability plus SHAP/LIME layer. LightGBM remains competitive on recall. Final clinical deployment would still require local validation and calibration review.
 
 ### 6.1 Model comparison table
 
-See above (development only).
+See above (official).
 
 ### 6.2 Calibration
 
-Calibration fitted on validation; classification metrics above use uncalibrated scores with validation-tuned thresholds. Calibrated Brier/ECE are stored per-model under experiment artifacts.
+Isotonic calibration fitted on validation only. Classification metrics above use uncalibrated scores with validation-tuned thresholds. Per-model Brier/ECE are in `model_comparison.csv`.
 
 ### 6.3 Explanation concordance
 
-Measured on **15** held-out test instances for the promoted **development** Logistic Regression artifact (`results/phase1/explainability/shap_lime_local.json`):
+Measured on **30** held-out test instances for the promoted official Logistic Regression artifact (`results/phase1/explainability/shap_lime_local.json`):
 
 | Aggregate metric | Value |
 |---|---:|
-| Mean Jaccard (top-3) | 0.66 |
-| Exact top-3 set agreement rate | 0.47 |
+| Mean Jaccard (top-3) | 0.44 |
+| Exact top-3 set agreement rate | 0.07 |
 
-Example instance top-3 (both methods): GenHlth, BMI, HighBP.
+Example instance: SHAP top-3 GenHlth, BMI, HighBP; LIME overlapped on GenHlth/BMI (Jaccard 0.5).
 
-Interpretation (mandatory): concordance is **explanation-method agreement only**, not predictive confidence or clinical truth. SHAP/LIME are not causal.
+Interpretation (mandatory): concordance is **explanation-method agreement only**, not predictive confidence or clinical truth. SHAP/LIME are not causal. The modest exact-match rate underscores why dual explainers are useful as a disagreement flag, not a certainty score.
 
 ## 7. Ethical Issues and Concerns
 
