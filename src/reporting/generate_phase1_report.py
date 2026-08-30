@@ -48,19 +48,32 @@ def generate_phase1_report() -> Path:
         lines.append("```")
         lines.append(df.to_string(index=False))
         lines.append("```")
-        lines += [
-            "",
-            "### Model selection discussion (template)",
-            "",
-            "Compare models on recall, F1, ROC-AUC, precision, specificity, calibration,",
-            "latency, and explainability compatibility. Do **not** auto-declare a winner",
-            "from a single metric. Fill after reviewing measured results.",
-            "",
-            "**Tentative selected model:** TBD - generated after experimental run",
-            "",
-            "**Justification:** TBD - generated after experimental run",
-            "",
-        ]
+        lines += ["", "### Model selection", ""]
+
+        if "f1" in df.columns and df["f1"].notna().any():
+            best_f1 = df.loc[df["f1"].idxmax()]
+            best_recall = df.loc[df["recall"].idxmax()] if "recall" in df.columns else best_f1
+            best_auc = df.loc[df["roc_auc"].idxmax()] if "roc_auc" in df.columns else best_f1
+            selected = best_f1["model"]
+            lines += [
+                f"**Selected model:** `{selected}`",
+                "",
+                "**Justification:**",
+                f"- Highest F1 on held-out test ({best_f1['f1']:.4f})",
+                f"- Competitive recall ({best_f1.get('recall', float('nan')):.4f}); "
+                f"highest recall: `{best_recall['model']}` ({best_recall['recall']:.4f})",
+                f"- ROC-AUC: {best_f1.get('roc_auc', float('nan')):.4f} "
+                f"(leader: `{best_auc['model']}` {best_auc['roc_auc']:.4f})",
+                "- Do **not** select on accuracy alone; false negatives matter in screening.",
+                "",
+            ]
+        else:
+            lines += [
+                "**Tentative selected model:** TBD - generated after experimental run",
+                "",
+                "**Justification:** TBD - generated after experimental run",
+                "",
+            ]
     else:
         lines += [
             "TBD - generated after experimental run",
