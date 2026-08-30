@@ -75,6 +75,17 @@ Flutter client source lives in `mobile/flutter_app/` (install Flutter SDK to run
 
 Confirm or edit `configs/phase1_models.yaml` before publishing official results.
 
+## Phase-1 status (local rerun)
+
+Official full-data benchmark results are in `results/phase1/`. To reproduce:
+
+```powershell
+powershell -File scripts/run_phase1_official.ps1
+```
+
+Paper draft: `research/paper/phase1_draft.md`  
+Panel slides: `presentation/phase1/slides_draft.md`
+
 ## License
 
 MIT — see `LICENSE`. Respect upstream dataset terms separately.

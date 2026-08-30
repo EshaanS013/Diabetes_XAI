@@ -48,9 +48,9 @@ Confirmed by project owner. Config: `configs/phase1_models.yaml` (`selection_sta
 
 ## Blocking decisions
 
-- [ ] Exact five Phase-1 algorithms confirmed by supervisor/team
-- [ ] Dataset file placed under `data/raw/` (download script or manual Kaggle/UCI)
-- [ ] AWS account usage (optional) vs local training for Phase 1
+- [x] Exact five Phase-1 algorithms confirmed by supervisor/team
+- [x] Dataset file placed under `data/raw/` (download script or manual Kaggle/UCI)
+- [x] AWS account usage (optional) vs local training for Phase 1 — **local training used**
 - [ ] Flutter kickoff timing (after model selection preferred)
 
 ## Non-negotiables
