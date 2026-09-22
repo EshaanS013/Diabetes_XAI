@@ -1,0 +1,28 @@
+name: QA
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install project and QA dependencies
+        run: python -m pip install -e ".[dev]" -c requirements/constraints-tested.txt
+      - name: Compile source
+        run: python -m compileall -q src api scripts tests
+      - name: Lint source
+        run: ruff check src api scripts tests
+      - name: Run tests with coverage
+        run: pytest -q --cov=src --cov=api --cov-report=term-missing

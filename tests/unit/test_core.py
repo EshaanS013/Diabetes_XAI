@@ -3,14 +3,15 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.linear_model import LogisticRegression
 
+from src.data.audit import audit_exact_duplicate_overlap
 from src.data.schema import load_schema
 from src.data.split import assert_disjoint, make_stratified_splits
-from src.evaluation.metrics import classification_metrics, specificity_score
+from src.evaluation.metrics import classification_metrics, compact_curve, specificity_score
 from src.explainability.generate import agreement_metrics
-from src.models.registry import list_models
-from src.preprocessing.pipeline import build_model_pipeline, BMIIQRCapper
-from sklearn.linear_model import LogisticRegression
+from src.models.registry import get_model_definition, list_models
+from src.preprocessing.pipeline import BMIIQRCapper, build_model_pipeline
 
 
 def test_schema_loads_21_features():
@@ -38,6 +39,16 @@ def test_registry_has_ten_models():
         assert required in models
 
 
+def test_full_data_model_implementations_are_scalable():
+    svm = get_model_definition("svm")
+    gradient_boosting = get_model_definition("gradient_boosting")
+    assert svm.estimator_factory(42).__class__.__name__ == "LinearSVC"
+    assert svm.supports_predict_proba is False
+    assert gradient_boosting.estimator_factory(42).__class__.__name__ == (
+        "HistGradientBoostingClassifier"
+    )
+
+
 def test_specificity_and_metrics_known_arrays():
     y_true = np.array([0, 0, 1, 1, 1, 0, 1, 0])
     y_prob = np.array([0.1, 0.2, 0.8, 0.9, 0.7, 0.4, 0.6, 0.3])
@@ -53,6 +64,14 @@ def test_specificity_and_metrics_known_arrays():
     assert m["f1"] == pytest.approx(1.0)
     assert 0.0 <= m["roc_auc"] <= 1.0
     assert m["confusion_matrix"]["fn"] == 0
+
+
+def test_curve_compaction_preserves_endpoints():
+    curve = {"x": list(range(5000)), "y": list(range(5000))}
+    compacted = compact_curve(curve, max_points=100)
+    assert len(compacted["x"]) == 100
+    assert compacted["x"][0] == 0
+    assert compacted["x"][-1] == 4999
 
 
 def test_splits_are_disjoint_and_cover_all():
@@ -127,3 +146,11 @@ def test_agreement_metrics_semantics():
     assert "BMI" in out["shap_top_features"]
     assert out["overlap_count"] >= 1
     assert "NOT predictive confidence" in out["note"]
+
+
+def test_duplicate_overlap_audit_detects_cross_split_copy():
+    df = pd.DataFrame({"x": [1, 2, 1, 3], "target": [0, 1, 0, 1]})
+    splits = {"train": np.array([0, 1]), "validation": np.array([2]), "test": np.array([3])}
+    report = audit_exact_duplicate_overlap(df, splits)
+    assert report["duplicate_excess_rows"] == 1
+    assert report["cross_split_pairs"]["train__validation"]["shared_unique_row_hashes"] == 1

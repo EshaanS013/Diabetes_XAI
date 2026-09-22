@@ -1,0 +1,34 @@
+# Phase 2 completes the ten-model benchmark with the five algorithms not run in Phase 1.
+# Confirmed by the project owner on 2026-09-22.
+
+experiment_name: phase2_remaining_five_full_data
+selection_status: confirmed
+confirmed_on: "2026-09-22"
+confirmed_by: project_owner
+selection_rationale: >
+  Complete the registered ten-model benchmark by evaluating Gaussian Naive Bayes,
+  K-Nearest Neighbours, a full-data-scalable linear SVM, histogram gradient boosting,
+  and CatBoost on the frozen split-v1 partitions.
+
+models:
+  - naive_bayes
+  - knn
+  - svm
+  - gradient_boosting
+  - catboost
+
+primary_metric: f1
+cv_folds: 5
+tuning_trials_simple: 15
+tuning_trials_heavy: 20
+allow_official_run: true
+dev_train_subsample: null
+results_dir: results/phase2
+
+model_overrides:
+  # Full-data KNN prediction dominates runtime. This predeclared compact grid keeps
+  # five-fold tuning tractable without sampling away any training observations.
+  knn:
+    search_space:
+      model__n_neighbors: [15, 31]
+      model__weights: [distance]

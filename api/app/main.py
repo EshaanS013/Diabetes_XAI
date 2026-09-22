@@ -4,7 +4,7 @@ import os
 import time
 from functools import lru_cache
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import joblib
 import numpy as np
@@ -26,27 +26,27 @@ DISCLAIMER = (
 
 
 class HealthFeatures(BaseModel):
-    HighBP: float = Field(..., ge=0, le=1)
-    HighChol: float = Field(..., ge=0, le=1)
-    CholCheck: float = Field(..., ge=0, le=1)
+    HighBP: Literal[0, 1]
+    HighChol: Literal[0, 1]
+    CholCheck: Literal[0, 1]
     BMI: float = Field(..., ge=12, le=100)
-    Smoker: float = Field(..., ge=0, le=1)
-    Stroke: float = Field(..., ge=0, le=1)
-    HeartDiseaseorAttack: float = Field(..., ge=0, le=1)
-    PhysActivity: float = Field(..., ge=0, le=1)
-    Fruits: float = Field(..., ge=0, le=1)
-    Veggies: float = Field(..., ge=0, le=1)
-    HvyAlcoholConsump: float = Field(..., ge=0, le=1)
-    AnyHealthcare: float = Field(..., ge=0, le=1)
-    NoDocbcCost: float = Field(..., ge=0, le=1)
-    GenHlth: float = Field(..., ge=1, le=5)
-    MentHlth: float = Field(..., ge=0, le=30)
-    PhysHlth: float = Field(..., ge=0, le=30)
-    DiffWalk: float = Field(..., ge=0, le=1)
-    Sex: float = Field(..., ge=0, le=1)
-    Age: float = Field(..., ge=1, le=13)
-    Education: float = Field(..., ge=1, le=6)
-    Income: float = Field(..., ge=1, le=8)
+    Smoker: Literal[0, 1]
+    Stroke: Literal[0, 1]
+    HeartDiseaseorAttack: Literal[0, 1]
+    PhysActivity: Literal[0, 1]
+    Fruits: Literal[0, 1]
+    Veggies: Literal[0, 1]
+    HvyAlcoholConsump: Literal[0, 1]
+    AnyHealthcare: Literal[0, 1]
+    NoDocbcCost: Literal[0, 1]
+    GenHlth: int = Field(..., ge=1, le=5)
+    MentHlth: int = Field(..., ge=0, le=30)
+    PhysHlth: int = Field(..., ge=0, le=30)
+    DiffWalk: Literal[0, 1]
+    Sex: Literal[0, 1]
+    Age: int = Field(..., ge=1, le=13)
+    Education: int = Field(..., ge=1, le=6)
+    Income: int = Field(..., ge=1, le=8)
 
 
 class PredictRequest(BaseModel):
@@ -58,6 +58,7 @@ class PredictRequest(BaseModel):
 class PredictResponse(BaseModel):
     risk_probability: float
     risk_percent: float
+    classification_probability: float
     predicted_label: int
     threshold: float
     model_name: str | None
@@ -72,6 +73,16 @@ def _artifact_path() -> Path:
     if not path.is_absolute():
         path = PROJECT_ROOT / path
     return path
+
+
+def _positive_probability(model: Any, rows: pd.DataFrame) -> np.ndarray:
+    """Return a positive-class score for probabilistic and margin classifiers."""
+    if hasattr(model, "predict_proba"):
+        return np.asarray(model.predict_proba(rows))[:, 1]
+    if hasattr(model, "decision_function"):
+        margin = np.clip(np.asarray(model.decision_function(rows)), -50.0, 50.0)
+        return 1.0 / (1.0 + np.exp(-margin))
+    return np.asarray(model.predict(rows), dtype=float)
 
 
 @lru_cache(maxsize=1)
@@ -108,7 +119,7 @@ def _ablation_contributions(model: Any, row: pd.DataFrame, baseline_proba: float
             perturbed.loc[:, col] = mids[col]
         else:
             perturbed.loc[:, col] = 0.0
-        p = float(model.predict_proba(perturbed)[0, 1])
+        p = float(_positive_probability(model, perturbed)[0])
         scores[col] = float(baseline_proba - p)
     return scores
 
@@ -132,7 +143,8 @@ def _lime_contributions(model: Any, row: pd.DataFrame, feature_order: list[str])
 
     def predict_fn(data: np.ndarray) -> np.ndarray:
         df = pd.DataFrame(data, columns=feature_order)
-        return model.predict_proba(df)
+        positive = _positive_probability(model, df)
+        return np.column_stack([1.0 - positive, positive])
 
     exp = explainer.explain_instance(
         data_row=base,
@@ -191,33 +203,39 @@ def predict(req: PredictRequest) -> PredictResponse:
     except FileNotFoundError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
-    model = art.get("calibrated_model") or art["model"]
+    classification_model = art.get("classification_model") or art["model"]
+    risk_model = (
+        art.get("risk_model")
+        or art.get("calibrated_model")
+        or classification_model
+    )
     feature_order = art["feature_order"]
     threshold = float(art.get("threshold", 0.5))
     payload = req.features.model_dump()
     row = pd.DataFrame([[payload[c] for c in feature_order]], columns=feature_order)
 
     try:
-        proba = float(model.predict_proba(row)[0, 1])
+        classification_proba = float(_positive_probability(classification_model, row)[0])
+        risk_proba = float(_positive_probability(risk_model, row)[0])
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Inference failed: {exc}") from exc
 
-    label = int(proba >= threshold)
+    label = int(classification_proba >= threshold)
     explanations = None
     if req.include_explanations:
         t0 = time.perf_counter()
-        ablation = _ablation_contributions(model, row, proba)
+        ablation = _ablation_contributions(risk_model, row, risk_proba)
         lime_scores: dict[str, float] = {}
         lime_error = None
         try:
-            lime_scores = _lime_contributions(model, row, feature_order)
+            lime_scores = _lime_contributions(risk_model, row, feature_order)
         except Exception as exc:  # noqa: BLE001
             lime_error = str(exc)
         elapsed = time.perf_counter() - t0
         agree = agreement_metrics(ablation, lime_scores, top_k=3) if lime_scores else None
         # For API we expose ablation as a fast surrogate and LIME when available.
         # Full offline SHAP remains in src.explainability.generate.
-        safe = render_safe_explanations(ablation if req.audience == "patient" else ablation, top_k=5)
+        safe = render_safe_explanations(ablation, top_k=5)
         explanations = {
             "status": "ok_partial_xai",
             "method_notes": {
@@ -241,8 +259,9 @@ def predict(req: PredictRequest) -> PredictResponse:
         }
 
     return PredictResponse(
-        risk_probability=proba,
-        risk_percent=round(proba * 100.0, 2),
+        risk_probability=risk_proba,
+        risk_percent=round(risk_proba * 100.0, 2),
+        classification_probability=classification_proba,
         predicted_label=label,
         threshold=threshold,
         model_name=art.get("definition_name"),

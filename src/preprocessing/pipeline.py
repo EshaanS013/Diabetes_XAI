@@ -14,7 +14,6 @@ from sklearn.preprocessing import StandardScaler
 
 from src.data.schema import DataSchema, load_schema
 
-
 CONTINUOUS_LIKE = {"continuous", "continuous_count"}
 
 

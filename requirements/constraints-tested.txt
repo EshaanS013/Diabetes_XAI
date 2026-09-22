@@ -1,0 +1,25 @@
+# Direct dependency versions used for the official Phase-2 run on Python 3.13.2.
+# Install with: python -m pip install -r requirements/base.txt -c requirements/constraints-tested.txt
+numpy==2.5.3
+pandas==2.3.3
+scikit-learn==1.9.1
+imbalanced-learn==0.14.2
+matplotlib==3.11.2
+seaborn==0.13.2
+PyYAML==6.0.3
+joblib==1.6.0
+tqdm==4.70.1
+optuna==4.9.0
+xgboost==2.1.4
+lightgbm==4.7.0
+catboost==1.2.10
+shap==0.52.0
+lime==0.2.0.1
+ucimlrepo==0.0.7
+fastapi==0.141.1
+uvicorn==0.53.0
+pydantic==2.13.5
+python-multipart==0.0.32
+httpx==0.28.1
+pytest==8.4.2
+pytest-cov==5.0.0

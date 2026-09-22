@@ -1,0 +1,24 @@
+{
+  "audit_scope": "exact feature-plus-target row duplicates",
+  "total_rows": 253680,
+  "duplicated_rows": 35575,
+  "duplicate_excess_rows": 24206,
+  "cross_split_pairs": {
+    "test__train": {
+      "shared_unique_row_hashes": 3489,
+      "test_rows_affected": 4496,
+      "train_rows_affected": 9827
+    },
+    "test__validation": {
+      "shared_unique_row_hashes": 1349,
+      "test_rows_affected": 2065,
+      "validation_rows_affected": 2080
+    },
+    "train__validation": {
+      "shared_unique_row_hashes": 3500,
+      "train_rows_affected": 9734,
+      "validation_rows_affected": 4536
+    }
+  },
+  "interpretation": "Non-zero overlap can make a row-random test split optimistic. Split-v1 is retained for direct Phase-1 comparability; a duplicate-grouped split should be a separately versioned sensitivity analysis before clinical claims."
+}

@@ -1,8 +1,8 @@
-# Experiment Protocol (Phase 1)
+# Experiment Protocol (Phase 1 + Phase 2)
 
 ## Objective
 
-Compare five machine-learning algorithms for binary diabetes-risk prediction on the CDC BRFSS2015 cleaned binary extract, under a leakage-free protocol, and produce measured metrics for the research paper and panel.
+Compare the full registered ten-model suite for binary diabetes-risk prediction on the CDC BRFSS2015 cleaned binary extract and produce measured, reproducible metrics.
 
 ## Dataset
 
@@ -24,6 +24,11 @@ Compare five machine-learning algorithms for binary diabetes-risk prediction on 
 - SMOTE **only** inside training / CV training folds
 - Hyperparameter selection uses CV on train; validation for calibration / optional threshold discussion
 - **Test set untouched** until model configuration is frozen
+- Rank candidates by training-fold CV F1. Test metrics are final retrospective evaluation and are not a model-selection objective.
+
+### Exact-duplicate limitation
+
+The original `split-v1` is row-random and contains exact feature-plus-target duplicates across partitions. Phase 2 retains it only so results remain directly comparable with the completed Phase 1. `results/phase2/duplicate_overlap_audit.json` quantifies the overlap. A separately versioned duplicate-grouped split and sensitivity rerun are required before clinical-performance claims.
 
 ## Optimisation metric
 
@@ -32,11 +37,12 @@ Compare five machine-learning algorithms for binary diabetes-risk prediction on 
 
 ## Model selection policy
 
-Do **not** pick the production model by accuracy alone. Discuss recall (false-negative burden), F1, ROC-AUC, calibration, latency, and explainability compatibility.
+Do **not** pick the production model from held-out test rankings or accuracy alone. The automated recommendation is based on CV F1; human review must also cover recall (false-negative burden), calibration, subgroup behavior, latency, and explainability compatibility.
 
 ## Official vs development runs
 
 - Official Phase-1 publication requires `selection_status: confirmed` in `configs/phase1_models.yaml`
+- Official Phase-2 publication requires `selection_status: confirmed` in `configs/phase2_models.yaml`
 - Development runs may proceed while pending confirmation; label outputs as non-official
 
 ## Reproducibility artifacts

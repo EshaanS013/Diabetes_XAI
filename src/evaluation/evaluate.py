@@ -11,7 +11,7 @@ from src.utils.config import PROJECT_ROOT, ensure_dir, load_json, setup_logging
 logger = setup_logging()
 
 
-def plot_comparison_bars(comparison_csv: Path, out_dir: Path) -> None:
+def plot_comparison_bars(comparison_csv: Path, out_dir: Path, title: str) -> None:
     df = pd.read_csv(comparison_csv)
     if df.empty:
         logger.warning("Empty comparison CSV — skipping plots")
@@ -28,25 +28,36 @@ def plot_comparison_bars(comparison_csv: Path, out_dir: Path) -> None:
     ax.set_xticklabels(df["model"].tolist(), rotation=20, ha="right")
     ax.set_ylim(0, 1.05)
     ax.set_ylabel("Score")
-    ax.set_title("Phase-1 model comparison (measured values only)")
+    ax.set_title(f"{title} (measured values only)")
     ax.legend()
     fig.tight_layout()
     fig.savefig(out_dir / "metric_bars.png", dpi=150)
     plt.close(fig)
 
 
-def plot_confusion_from_test_metrics(test_metrics_path: Path, out_dir: Path) -> None:
-    """Fallback: plot confusion matrices from results/phase1/test_metrics.json."""
+def plot_results_from_test_metrics(test_metrics_path: Path, out_dir: Path) -> bool:
+    """Regenerate curves and confusion matrices from tracked result JSON."""
     if not test_metrics_path.exists():
-        return
+        return False
     payload = load_json(test_metrics_path)
     cm_dir = ensure_dir(out_dir / "confusion_matrices")
+    fig_roc, ax_roc = plt.subplots(figsize=(7, 6))
+    fig_pr, ax_pr = plt.subplots(figsize=(7, 6))
+    any_curve = False
     for entry in payload.get("completed", []):
         tm = entry.get("test_metrics") or {}
         cm = tm.get("confusion_matrix")
         if not cm:
             continue
         name = entry.get("model", "unknown")
+        curves = entry.get("test_curves") or {}
+        roc = curves.get("roc_curve", {})
+        pr = curves.get("pr_curve", {})
+        if roc.get("fpr") and roc.get("tpr"):
+            ax_roc.plot(roc["fpr"], roc["tpr"], label=name)
+            any_curve = True
+        if pr.get("recall") and pr.get("precision"):
+            ax_pr.plot(pr["recall"], pr["precision"], label=name)
         mat = np.array(
             [[cm.get("tn", 0), cm.get("fp", 0)], [cm.get("fn", 0), cm.get("tp", 0)]],
             dtype=float,
@@ -62,7 +73,20 @@ def plot_confusion_from_test_metrics(test_metrics_path: Path, out_dir: Path) -> 
         fig_cm.tight_layout()
         fig_cm.savefig(cm_dir / f"{name}.png", dpi=150)
         plt.close(fig_cm)
-    logger.info("Plotted confusion matrices from %s", test_metrics_path)
+    if any_curve:
+        ax_roc.plot([0, 1], [0, 1], "k--", linewidth=1, label="chance")
+        ax_roc.set(xlabel="FPR", ylabel="TPR", title="ROC curves (held-out test)")
+        ax_roc.legend(fontsize=8)
+        fig_roc.tight_layout()
+        fig_roc.savefig(out_dir / "roc_curves.png", dpi=150)
+        ax_pr.set(xlabel="Recall", ylabel="Precision", title="Precision–Recall curves (held-out test)")
+        ax_pr.legend(fontsize=8)
+        fig_pr.tight_layout()
+        fig_pr.savefig(out_dir / "precision_recall_curves.png", dpi=150)
+    plt.close(fig_roc)
+    plt.close(fig_pr)
+    logger.info("Plotted tracked results from %s", test_metrics_path)
+    return any_curve
 
 
 def _latest_experiment_dir() -> Path | None:
@@ -135,15 +159,22 @@ def plot_curves_from_experiment(experiment_dir: Path, out_dir: Path) -> None:
     plt.close(fig_pr)
 
 
-def evaluate_main(experiment_dir: str | Path | None = None) -> None:
-    results = PROJECT_ROOT / "results" / "phase1"
+def evaluate_main(
+    experiment_dir: str | Path | None = None,
+    *,
+    results_dir: str | Path = "results/phase1",
+    title: str = "Phase-1 model comparison",
+) -> None:
+    results = Path(results_dir)
+    if not results.is_absolute():
+        results = PROJECT_ROOT / results
     comparison = results / "model_comparison.csv"
     if not comparison.exists():
         raise FileNotFoundError(
             f"Missing {comparison}. Run training first: python -m src.training.train"
         )
     out_dir = ensure_dir(results / "figures")
-    plot_comparison_bars(comparison, out_dir)
+    plot_comparison_bars(comparison, out_dir, title)
 
     exp = Path(experiment_dir) if experiment_dir else _latest_experiment_dir()
     plotted_curves = False
@@ -154,8 +185,8 @@ def evaluate_main(experiment_dir: str | Path | None = None) -> None:
             plotted_curves = True
             logger.info("Used experiment curves from %s", exp)
     if not plotted_curves:
-        logger.warning("No experiment curve artifacts — using test_metrics confusion fallback")
-        plot_confusion_from_test_metrics(results / "test_metrics.json", out_dir)
+        logger.warning("No experiment curve artifacts — using tracked test_metrics.json")
+        plot_results_from_test_metrics(results / "test_metrics.json", out_dir)
 
     logger.info("Wrote evaluation figures to %s", out_dir)
 
@@ -165,8 +196,10 @@ def main(argv: list[str] | None = None) -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--experiment-dir", default=None)
+    parser.add_argument("--results-dir", default="results/phase1")
+    parser.add_argument("--title", default="Phase-1 model comparison")
     args = parser.parse_args(argv)
-    evaluate_main(args.experiment_dir)
+    evaluate_main(args.experiment_dir, results_dir=args.results_dir, title=args.title)
 
 
 if __name__ == "__main__":

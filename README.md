@@ -6,13 +6,12 @@ Research-grade pipeline for **preliminary diabetes risk screening** with interpr
 
 > **Not a diagnostic device.** Outputs are screening aids. Explanations are associative, not causal. SHAP/LIME agreement is explanation concordance, not predictive confidence.
 
-## Phase-1 models (confirmed)
+## Ten-model benchmark complete
 
-1. Logistic Regression  
-2. Random Forest  
-3. XGBoost  
-4. LightGBM  
-5. MLP  
+Phase 1 evaluated Logistic Regression, Random Forest, XGBoost, LightGBM, and MLP.
+Phase 2 evaluates Gaussian Naive Bayes, KNN, linear SVM, histogram gradient boosting,
+and CatBoost. Measured outputs are tracked in `results/phase1/`, `results/phase2/`,
+and the CV-ranked combined table in `results/all_models/`.
 
 ## What this repo contains
 
@@ -30,16 +29,18 @@ Research-grade pipeline for **preliminary diabetes risk screening** with interpr
 python -m venv .venv
 # Windows:
 .venv\Scripts\activate
-pip install -r requirements/base.txt
+pip install -r requirements/base.txt -c requirements/constraints-tested.txt
 
 python scripts/download_dataset.py
 python -m src.data.prepare
 pytest
 
-# Development Phase-1 (proposed five; not official):
+# Development smoke run:
 powershell -File scripts/run_phase1_dev.ps1
-# Larger development subsample:
-powershell -File scripts/run_phase1_dev.ps1 -Config configs/experiments/phase1_dev_large.yaml
+
+# Official full-data benchmarks:
+powershell -File scripts/run_phase1_official.ps1
+powershell -File scripts/run_phase2_official.ps1
 ```
 
 ### API
@@ -65,23 +66,16 @@ Flutter client source lives in `mobile/flutter_app/` (install Flutter SDK to run
 | `research/paper/phase1_draft.md` | Paper draft (no fabricated metrics) |
 | `presentation/phase1/outline.md` | September panel outline |
 
-## Proposed Phase-1 five (pending confirmation)
+## Benchmark status
 
-1. Logistic Regression  
-2. Random Forest  
-3. XGBoost  
-4. LightGBM  
-5. MLP  
+Both confirmed five-model phases have completed full-data runs on the frozen split.
+The combined ranking uses training-fold CV F1; held-out test metrics are reported only
+for final evaluation. No production model is auto-promoted from test performance.
 
-Confirm or edit `configs/phase1_models.yaml` before publishing official results.
-
-## Phase-1 status (local rerun)
-
-Official full-data benchmark results are in `results/phase1/`. To reproduce:
-
-```powershell
-powershell -File scripts/run_phase1_official.ps1
-```
+Important limitation: `split-v1` contains exact duplicate rows across partitions.
+See `results/phase2/duplicate_overlap_audit.json`. A duplicate-grouped sensitivity
+benchmark, subgroup/fairness review, and clinical validation remain necessary before
+deployment or clinical claims.
 
 Paper draft: `research/paper/phase1_draft.md`  
 Panel slides: `presentation/phase1/slides_draft.md`
