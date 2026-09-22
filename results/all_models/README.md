@@ -1,6 +1,7 @@
 # Ten-model benchmark
 
 Models are ranked by cross-validation F1. Test-set values are final evaluation only.
+The Phase-2 environment and QA record is in `../phase2/run_manifest.json`.
 
 | cv_rank | model | benchmark_phase | cv_best_score | f1 | recall | precision | roc_auc | pr_auc | calibrated_brier_score | calibrated_ece |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
