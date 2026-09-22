@@ -18,8 +18,8 @@ def main() -> None:
         return
 
     try:
-        from ucimlrepo import fetch_ucirepo
         import pandas as pd
+        from ucimlrepo import fetch_ucirepo
     except ImportError:
         print("Installing dependency tip: pip install ucimlrepo", file=sys.stderr)
         raise SystemExit(

@@ -1,0 +1,14 @@
+experiment_name: phase2_smoke
+selection_status: development
+models: [naive_bayes, knn, svm, gradient_boosting, catboost]
+primary_metric: f1
+cv_folds: 2
+tuning_trials_simple: 2
+tuning_trials_heavy: 1
+dev_train_subsample: 3000
+results_dir: results/dev/phase2_smoke
+model_overrides:
+  knn:
+    search_space:
+      model__n_neighbors: [15]
+      model__weights: [distance]

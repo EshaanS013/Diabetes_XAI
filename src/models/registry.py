@@ -3,12 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
-from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
-from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 
 
 @dataclass
@@ -44,11 +44,11 @@ def _knn(seed: int) -> Any:
 
 
 def _svm(seed: int) -> Any:
-    return SVC(
-        kernel="rbf",
-        probability=True,
+    return LinearSVC(
         class_weight="balanced",
         random_state=seed,
+        dual="auto",
+        max_iter=5000,
     )
 
 
@@ -62,7 +62,11 @@ def _random_forest(seed: int) -> Any:
 
 
 def _gradient_boosting(seed: int) -> Any:
-    return GradientBoostingClassifier(random_state=seed)
+    return HistGradientBoostingClassifier(
+        random_state=seed,
+        max_iter=200,
+        early_stopping=True,
+    )
 
 
 def _xgboost(seed: int) -> Any:
@@ -158,18 +162,20 @@ REGISTRY: dict[str, ModelDefinition] = {
     ),
     "svm": ModelDefinition(
         name="svm",
-        display_name="Support Vector Machine",
-        family="kernel",
+        display_name="Linear Support Vector Machine",
+        family="linear_margin",
         requires_scaling=True,
-        supports_predict_proba=True,
-        tuning_strategy="optuna",
-        explainability_strategy="kernel",
+        supports_predict_proba=False,
+        tuning_strategy="grid_small",
+        explainability_strategy="linear",
         estimator_factory=_svm,
-        search_space={
-            "model__C": ("float", 0.1, 10.0, "log"),
-            "model__gamma": ("categorical", ["scale", "auto"]),
-        },
-        notes="Expensive on full BRFSS; subsample carefully for Phase 1 if selected.",
+        search_space={"model__C": [0.01, 0.1, 1.0, 10.0]},
+        notes=(
+            "Linear SVM is used for the full 253,680-row BRFSS benchmark. "
+            "The previously registered RBF SVC has quadratic scaling and is not "
+            "a production-safe full-data implementation. Probabilities are calibrated "
+            "on the validation partition."
+        ),
     ),
     "random_forest": ModelDefinition(
         name="random_forest",
@@ -188,7 +194,7 @@ REGISTRY: dict[str, ModelDefinition] = {
     ),
     "gradient_boosting": ModelDefinition(
         name="gradient_boosting",
-        display_name="Gradient Boosting",
+        display_name="Histogram Gradient Boosting",
         family="boosting",
         requires_scaling=False,
         supports_predict_proba=True,
@@ -196,10 +202,12 @@ REGISTRY: dict[str, ModelDefinition] = {
         explainability_strategy="tree",
         estimator_factory=_gradient_boosting,
         search_space={
-            "model__n_estimators": ("int", 100, 300),
+            "model__max_iter": ("int", 100, 300),
             "model__learning_rate": ("float", 0.01, 0.2, "log"),
-            "model__max_depth": ("int", 2, 5),
+            "model__max_leaf_nodes": ("int", 15, 63),
+            "model__l2_regularization": ("float", 1e-6, 1.0, "log"),
         },
+        notes="Histogram implementation preserves full-data training with practical runtime.",
     ),
     "xgboost": ModelDefinition(
         name="xgboost",

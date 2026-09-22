@@ -87,6 +87,18 @@ def classification_metrics(
     }
 
 
+def compact_curve(curve: dict[str, list[float]], max_points: int = 1000) -> dict[str, list[float]]:
+    """Deterministically thin plot arrays while preserving endpoints."""
+    compacted: dict[str, list[float]] = {}
+    for name, values in curve.items():
+        if len(values) <= max_points:
+            compacted[name] = values
+            continue
+        indices = np.unique(np.linspace(0, len(values) - 1, max_points, dtype=int))
+        compacted[name] = [values[int(i)] for i in indices]
+    return compacted
+
+
 def bootstrap_metric_cis(
     y_true: np.ndarray,
     y_prob: np.ndarray,

@@ -1,0 +1,38 @@
+{
+  "experiment_id": "20260922T181034Z_7175b7c8",
+  "experiment_name": "phase2_remaining_five_full_data",
+  "implementation_commit": "0df9264723060de2a67e80dc71890ab7f001ba5f",
+  "dataset_sha256": "4b702ecd2e80e431148cf29f12158928a2b401e97a65ddb7293ad5e6dc1a6f60",
+  "dataset_rows": 253680,
+  "split_version": "split-v1",
+  "split_sizes": {
+    "train": 177575,
+    "validation": 38052,
+    "test": 38053
+  },
+  "models_completed": [
+    "naive_bayes",
+    "knn",
+    "svm",
+    "gradient_boosting",
+    "catboost"
+  ],
+  "models_failed": [],
+  "runtime": {
+    "python": "3.13.2",
+    "scikit_learn": "1.9.1",
+    "imbalanced_learn": "0.14.2",
+    "catboost": "1.2.10",
+    "optuna": "4.9.0"
+  },
+  "qa": {
+    "ruff": "passed",
+    "compileall": "passed",
+    "pytest": "17 passed, 2 dependency deprecation warnings",
+    "coverage_percent": 29,
+    "strict_json_files_parsed": 5,
+    "result_pngs_validated": 8,
+    "tracked_result_regeneration": "passed"
+  },
+  "known_limitation": "split-v1 has exact duplicates across partitions; see duplicate_overlap_audit.json"
+}

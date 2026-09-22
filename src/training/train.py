@@ -18,7 +18,7 @@ from src.calibration.calibrate import fit_calibrator
 from src.data.load import load_raw_dataframe, xy_from_dataframe
 from src.data.schema import load_schema
 from src.data.split import load_splits
-from src.evaluation.metrics import bootstrap_metric_cis, classification_metrics
+from src.evaluation.metrics import bootstrap_metric_cis, classification_metrics, compact_curve
 from src.models.registry import ModelDefinition, get_model_definition
 from src.preprocessing.pipeline import build_model_pipeline
 from src.utils.config import (
@@ -187,34 +187,51 @@ def train_single_model(
     y_test: pd.Series,
     *,
     base_cfg: dict[str, Any],
-    phase1_cfg: dict[str, Any],
+    experiment_cfg: dict[str, Any],
     experiment_dir: Path,
     evaluate_test: bool,
 ) -> dict[str, Any]:
     definition = get_model_definition(model_name)
     seed = int(base_cfg["reproducibility"]["random_seed"])
     pre_cfg = base_cfg["preprocessing"]
-    primary_metric = phase1_cfg.get("primary_metric", base_cfg["training"]["primary_metric"])
-    cv_folds = int(phase1_cfg.get("cv_folds", base_cfg["training"]["cv_folds"]))
+    primary_metric = experiment_cfg.get(
+        "primary_metric", base_cfg["training"]["primary_metric"]
+    )
+    cv_folds = int(experiment_cfg.get("cv_folds", base_cfg["training"]["cv_folds"]))
+    model_override = (experiment_cfg.get("model_overrides") or {}).get(model_name, {})
 
     estimator = definition.estimator_factory(seed)
+    estimator_params = model_override.get("estimator_params") or {}
+    if estimator_params:
+        estimator.set_params(**estimator_params)
+    if model_override.get("search_space"):
+        definition = copy.deepcopy(definition)
+        definition.search_space = model_override["search_space"]
     pipeline = build_model_pipeline(
         estimator,
         scale=definition.requires_scaling,
-        use_smote=bool(pre_cfg.get("use_smote", True)),
+        use_smote=bool(model_override.get("use_smote", pre_cfg.get("use_smote", True))),
         smote_random_state=int(pre_cfg.get("smote_random_state", seed)),
         smote_k_neighbors=int(pre_cfg.get("smote_k_neighbors", 5)),
         bmi_iqr_cap=bool(pre_cfg.get("bmi_iqr_cap", True)),
         bmi_iqr_multiplier=float(pre_cfg.get("bmi_iqr_multiplier", 1.5)),
     )
 
-    n_trials = (
-        int(base_cfg["training"]["tuning_trials_heavy"])
+    n_trials = int(model_override.get("tuning_trials", 0)) or (
+        int(
+            experiment_cfg.get(
+                "tuning_trials_heavy", base_cfg["training"]["tuning_trials_heavy"]
+            )
+        )
         if definition.tuning_strategy == "optuna"
-        else int(base_cfg["training"]["tuning_trials_simple"])
+        else int(
+            experiment_cfg.get(
+                "tuning_trials_simple", base_cfg["training"]["tuning_trials_simple"]
+            )
+        )
     )
     # Smoke / subsampled development runs: keep tuning cheap
-    if phase1_cfg.get("dev_train_subsample"):
+    if experiment_cfg.get("dev_train_subsample"):
         n_trials = min(n_trials, 5)
         if definition.tuning_strategy == "optuna":
             n_trials = min(n_trials, 3)
@@ -319,6 +336,8 @@ def train_single_model(
         },
         "validation_metrics_calibrated_default_threshold": calibrated_val,
         "calibrated": calibrated is not None,
+        "model_notes": definition.notes,
+        "model_override": model_override,
         "error": None,
     }
 
@@ -327,10 +346,14 @@ def train_single_model(
         {
             "model": model,
             "calibrated_model": calibrated,
+            "classification_model": model,
+            "risk_model": calibrated or model,
             "definition_name": model_name,
             "feature_order": list(X_train.columns),
             "threshold": threshold,
-            "selection_status": phase1_cfg.get("selection_status"),
+            "threshold_model": "classification_model",
+            "selection_status": experiment_cfg.get("selection_status"),
+            "model_version": experiment_cfg.get("experiment_name", "phase1"),
         },
         model_dir / "artifact.joblib",
     )
@@ -351,20 +374,37 @@ def train_single_model(
         result["test_metrics"] = {
             k: v for k, v in test_metrics.items() if k not in {"roc_curve", "pr_curve"}
         }
+        calibrated_test_metrics = None
+        if calibrated is not None:
+            calibrated_test, _ = _eval(
+                "test_calibrated",
+                X_test,
+                y_test,
+                estimator=calibrated,
+                threshold=default_threshold,
+            )
+            calibrated_test_metrics = {
+                k: v
+                for k, v in calibrated_test.items()
+                if k not in {"roc_curve", "pr_curve"}
+            }
+        result["test_metrics_calibrated_default_threshold"] = calibrated_test_metrics
         result["test_metric_cis"] = cis
-        save_json(
-            {
-                "roc_curve": test_metrics["roc_curve"],
-                "pr_curve": test_metrics["pr_curve"],
-                "confusion_matrix": test_metrics["confusion_matrix"],
-            },
-            model_dir / "test_curves.json",
-        )
+        result["test_curves"] = {
+            "roc_curve": compact_curve(
+                {k: v for k, v in test_metrics["roc_curve"].items() if k != "thresholds"}
+            ),
+            "pr_curve": compact_curve(
+                {k: v for k, v in test_metrics["pr_curve"].items() if k != "thresholds"}
+            ),
+            "confusion_matrix": test_metrics["confusion_matrix"],
+        }
+        save_json(result["test_curves"], model_dir / "test_curves.json")
         save_json(result, model_dir / "metrics.json")
     return result
 
 
-def run_phase1(
+def run_experiment(
     *,
     config_path: str = "configs/phase1_models.yaml",
     force_official: bool = False,
@@ -372,21 +412,28 @@ def run_phase1(
     models_override: list[str] | None = None,
 ) -> dict[str, Any]:
     base_cfg = load_base_config()
-    phase1_cfg = load_yaml(config_path)
+    experiment_cfg = load_yaml(config_path)
     seed = int(base_cfg["reproducibility"]["random_seed"])
     set_global_seed(seed)
 
-    selection_status = phase1_cfg.get("selection_status", "unknown")
-    allow = bool(phase1_cfg.get("allow_official_phase1_run", False)) or force_official
+    selection_status = experiment_cfg.get("selection_status", "unknown")
+    allow = bool(
+        experiment_cfg.get(
+            "allow_official_run", experiment_cfg.get("allow_official_phase1_run", False)
+        )
+    ) or force_official
     if selection_status != "confirmed" and not allow:
         logger.warning(
-            "Phase-1 model list is '%s' (not confirmed). "
+            "Experiment model list is '%s' (not confirmed). "
             "Running in DEVELOPMENT mode. Official claims require confirmation "
-            "or --force-official. See docs/source_of_truth.md.",
+            "or --force-official. See docs/experiment_protocol.md.",
             selection_status,
         )
 
-    models = models_override or list(phase1_cfg["phase1_models"])
+    configured_models = experiment_cfg.get("models") or experiment_cfg.get("phase1_models")
+    if not configured_models:
+        raise ValueError(f"{config_path} must define 'models' or 'phase1_models'")
+    models = models_override or list(configured_models)
     for name in models:
         get_model_definition(name)  # validate early
 
@@ -399,7 +446,7 @@ def run_phase1(
     X_val, y_val = X.iloc[splits["validation"]], y.iloc[splits["validation"]]
     X_test, y_test = X.iloc[splits["test"]], y.iloc[splits["test"]]
 
-    subsample = phase1_cfg.get("dev_train_subsample")
+    subsample = experiment_cfg.get("dev_train_subsample")
     if subsample:
         n = int(subsample)
         logger.warning("DEV stratified subsample enabled: using %s training rows", n)
@@ -416,18 +463,23 @@ def run_phase1(
 
     experiment_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:8]
     experiment_dir = ensure_dir(PROJECT_ROOT / base_cfg["paths"]["experiments_dir"] / experiment_id)
-    results_dir = ensure_dir(PROJECT_ROOT / base_cfg["paths"]["results_dir"])
+    configured_results_dir = experiment_cfg.get(
+        "results_dir", base_cfg["paths"]["results_dir"]
+    )
+    results_dir = ensure_dir(PROJECT_ROOT / configured_results_dir)
+    experiment_name = experiment_cfg.get("experiment_name", "phase1")
 
     meta = {
         "experiment_id": experiment_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "selection_status": selection_status,
+        "experiment_name": experiment_name,
         "official_run": bool(allow and selection_status == "confirmed") or force_official,
         "models": models,
-        "primary_metric": phase1_cfg.get("primary_metric"),
+        "primary_metric": experiment_cfg.get("primary_metric"),
         "environment": environment_metadata(),
         "base_config": base_cfg,
-        "phase1_config": phase1_cfg,
+        "experiment_config": experiment_cfg,
         "disclaimer": (
             "Not a diagnostic device. Results are for research screening evaluation only. "
             "Do not fabricate or invent metrics — only measured values appear below."
@@ -450,7 +502,7 @@ def run_phase1(
                 X_test,
                 y_test,
                 base_cfg=base_cfg,
-                phase1_cfg=phase1_cfg,
+                experiment_cfg=experiment_cfg,
                 experiment_dir=experiment_dir,
                 evaluate_test=evaluate_test,
             )
@@ -488,6 +540,12 @@ def run_phase1(
             "pr_auc": tm.get("pr_auc"),
             "brier_score": tm.get("brier_score"),
             "ece": tm.get("ece"),
+            "calibrated_brier_score": (
+                r.get("test_metrics_calibrated_default_threshold") or {}
+            ).get("brier_score"),
+            "calibrated_ece": (
+                r.get("test_metrics_calibrated_default_threshold") or {}
+            ).get("ece"),
             "cv_best_score": (r.get("tuning") or {}).get("cv_best_score"),
             "training_time": r.get("training_seconds"),
             "inference_ms_per_row": tm.get("inference_ms_per_row"),
@@ -495,6 +553,7 @@ def run_phase1(
             "random_seed": r.get("random_seed"),
             "calibrated": r.get("calibrated"),
             "metrics_split": "test" if r.get("test_metrics") else "validation",
+            "selection_score_source": "cv_best_score",
         }
         comparison_rows.append(row)
 
@@ -524,14 +583,30 @@ def run_phase1(
         "selection_status": selection_status,
         "official_run": meta["official_run"],
     }
-    logger.info("Phase-1 run finished: %s", summary)
+    logger.info("%s run finished: %s", experiment_name, summary)
     return summary
+
+
+def run_phase1(
+    *,
+    config_path: str = "configs/phase1_models.yaml",
+    force_official: bool = False,
+    evaluate_test: bool = True,
+    models_override: list[str] | None = None,
+) -> dict[str, Any]:
+    """Backward-compatible wrapper for existing Phase-1 scripts."""
+    return run_experiment(
+        config_path=config_path,
+        force_official=force_official,
+        evaluate_test=evaluate_test,
+        models_override=models_override,
+    )
 
 
 def main(argv: list[str] | None = None) -> None:
     import argparse
 
-    parser = argparse.ArgumentParser(description="Train Phase-1 diabetes risk models")
+    parser = argparse.ArgumentParser(description="Train configured diabetes risk models")
     parser.add_argument("--config", default="configs/phase1_models.yaml")
     parser.add_argument(
         "--force-official",
@@ -550,7 +625,7 @@ def main(argv: list[str] | None = None) -> None:
         help="Evaluate on validation only (development)",
     )
     args = parser.parse_args(argv)
-    run_phase1(
+    run_experiment(
         config_path=args.config,
         force_official=args.force_official,
         evaluate_test=not args.skip_test,

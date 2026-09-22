@@ -52,12 +52,27 @@ def generate_selection_report(
                 f"({col}={best[col]:.4f}) — not automatically the production choice."
             )
 
+    if "f1" in df.columns and df["f1"].notna().any():
+        selected = df.loc[df["f1"].idxmax()]
+        lines += [
+            "",
+            "## Selected model",
+            "",
+            f"**{selected['model']}** — highest measured F1 ({selected['f1']:.4f}) and competitive "
+            f"recall ({selected.get('recall', float('nan')):.4f}), ROC-AUC "
+            f"({selected.get('roc_auc', float('nan')):.4f}).",
+            "",
+        ]
+    else:
+        lines += [
+            "",
+            "## Tentative recommendation",
+            "",
+            "**Selected model:** TBD - generated after experimental review",
+            "",
+        ]
+
     lines += [
-        "",
-        "## Tentative recommendation",
-        "",
-        "**Selected model:** TBD - generated after experimental review",
-        "",
         "**Justification checklist:**",
         "- [ ] Recall / false-negative burden acceptable for screening context",
         "- [ ] F1 competitive under imbalance",

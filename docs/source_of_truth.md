@@ -39,6 +39,18 @@ When documents disagree, apply this order:
 
 Confirmed by project owner. Config: `configs/phase1_models.yaml` (`selection_status: confirmed`).
 
+## Phase-2 remaining five — CONFIRMED (2026-09-22)
+
+1. `naive_bayes` — Gaussian probabilistic baseline
+2. `knn` — distance-based instance learner
+3. `svm` — full-data-scalable linear support vector machine
+4. `gradient_boosting` — histogram gradient boosting
+5. `catboost` — ordered boosting implementation
+
+Confirmed by project owner. Config: `configs/phase2_models.yaml`. The scalable SVM and
+histogram implementations replace the registry's earlier quadratic RBF SVC and classic
+gradient booster so the complete dataset can be used without silent subsampling.
+
 ## Immediate September milestone
 
 1. Train/compare five algorithms with full metrics (accuracy, precision, recall, F1, ROC, ROC-AUC, specificity, PR-AUC, Brier, ECE)
@@ -48,9 +60,9 @@ Confirmed by project owner. Config: `configs/phase1_models.yaml` (`selection_sta
 
 ## Blocking decisions
 
-- [ ] Exact five Phase-1 algorithms confirmed by supervisor/team
-- [ ] Dataset file placed under `data/raw/` (download script or manual Kaggle/UCI)
-- [ ] AWS account usage (optional) vs local training for Phase 1
+- [x] Exact five Phase-1 algorithms confirmed by supervisor/team
+- [x] Dataset file placed under `data/raw/` (download script or manual Kaggle/UCI)
+- [x] AWS account usage (optional) vs local training for Phase 1 — **local training used**
 - [ ] Flutter kickoff timing (after model selection preferred)
 
 ## Non-negotiables

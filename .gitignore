@@ -69,3 +69,4 @@ mobile/flutter_app/.packages
 *.log
 !artifacts/experiments/*.log
 logs/
+catboost_info/
